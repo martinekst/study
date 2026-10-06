@@ -1,0 +1,13 @@
+{
+  "name": "tf-skills",
+  "displayName": "TechFides skills",
+  "version": "1.0.0",
+  "description": "Všech 32 skillů z knihovny TechFides/tf-skills-manager-library (QA, PM, Dev, Analysis, Shared) jako jeden plugin.",
+  "author": {
+    "name": "TechFides"
+  },
+  "homepage": "https://github.com/TechFides/tf-skills-manager-library",
+  "repository": "https://github.com/martinekst/study",
+  "license": "MIT",
+  "keywords": ["techfides", "skills", "documentation", "qa", "pm", "czech"]
+}

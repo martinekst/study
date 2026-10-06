@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Zabalí každý skill z .claude/skills/<name>/ do dist/<name>.zip
+# Zabalí každý skill ze skills/<name>/ do dist/<name>.zip
 # (formát pro nahrání do claude.ai: Settings → Capabilities → Skills)
 # a navíc vytvoří dist/tf-skills-all.zip se všemi zipy pohromadě.
 #
@@ -8,7 +8,7 @@
 set -euo pipefail
 
 cd "$(dirname "$0")/.."
-SKILLS_DIR=".claude/skills"
+SKILLS_DIR="skills"
 OUT_DIR="dist"
 
 rm -rf "$OUT_DIR"
@@ -29,7 +29,7 @@ for name in "${names[@]}"; do
     exit 1
   fi
   # zip musí obsahovat složku <name>/ se SKILL.md v jejím kořeni
-  (cd "$SKILLS_DIR" && zip -q -r "../../$OUT_DIR/$name.zip" "$name" \
+  (cd "$SKILLS_DIR" && zip -q -r "../$OUT_DIR/$name.zip" "$name" \
       -x '*/node_modules/*' -x '*/.DS_Store' -x '*/__pycache__/*')
   echo "dist/$name.zip"
 done

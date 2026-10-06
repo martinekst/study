@@ -1,0 +1,14 @@
+{
+  "name": "techfides-skills",
+  "description": "Skilly TechFides zabalené jako plugin pro Claude Code, Cowork a claude.ai",
+  "owner": {
+    "name": "Martin Studnička"
+  },
+  "plugins": [
+    {
+      "name": "tf-skills",
+      "source": "./",
+      "description": "Všech 32 skillů z knihovny TechFides (QA, PM, Dev, Analysis, Shared)."
+    }
+  ]
+}
