@@ -1,0 +1,558 @@
+{
+  "version": 1,
+  "purpose": "Druhá kontrolní baseline: lidsky psaná česká próza v markdownu (dokumentace, marketing, blog). Slouží ke kalibraci FORMÁTOVACÍCH pravidel, která proti encyklopedickému korpusu (corpus/texts) vycházejí falešně jako nekonečně silný signál, protože Wikipedie emoji, tučné ani markdownové odrážky nepoužívá ze své podstaty. Veškerý obsah je z revizí před 1. 1. 2023, doložených polem revision/revisionDate, takže autorství člověkem je dané datem.",
+  "license": "Texty zůstávají pod licencemi svých autorů (viz pole license u každého dokumentu a v sources). CC BY-SA 4.0 zdroje si licenci nesou dál, licence tohoto skillu se na ně nevztahuje.",
+  "sources": {
+    "jg": {
+      "register": "marketing a how-to (junior.guru)",
+      "repoUrl": "https://github.com/juniorguru/junior.guru",
+      "license": "CC BY-SA 4.0 for content (LICENSE)",
+      "files": 18,
+      "words": 41024
+    },
+    "naucse-python": {
+      "register": "tutoriál s kódem (naucse)",
+      "repoUrl": "https://github.com/pyvec/naucse-python",
+      "license": "CC BY-SA 4.0 (per-lesson info.yml: license: cc-by-sa-40)",
+      "files": 15,
+      "words": 31166
+    },
+    "derisking-handbook": {
+      "register": "metodická příručka",
+      "repoUrl": "https://github.com/cesko-digital/derisking-handbook",
+      "license": "CC BY-SA 4.0 (LICENSE.txt)",
+      "files": 2,
+      "words": 18248
+    },
+    "blog": {
+      "register": "firemní blog a novinky (Česko.Digital)",
+      "repoUrl": "https://github.com/cesko-digital/blog",
+      "license": "MIT (LICENSE)",
+      "files": 17,
+      "words": 27103
+    }
+  },
+  "documents": [
+    {
+      "file": "jg/handbook__candidate.md",
+      "repo": "jg",
+      "license": "CC BY-SA 4.0 for content (LICENSE)",
+      "firstCommit": "2022-10-04",
+      "revision": "93d4321dbb",
+      "revisionDate": "2022-12-08",
+      "sourceUrl": "https://github.com/juniorguru/junior.guru/blob/93d4321dbb/juniorguru/mkdocs/docs/handbook/candidate.md",
+      "words": 12143
+    },
+    {
+      "file": "jg/topics__pyladies.md",
+      "repo": "jg",
+      "license": "CC BY-SA 4.0 for content (LICENSE)",
+      "firstCommit": "2021-04-13",
+      "revision": "c916e446ee",
+      "revisionDate": "2021-09-08",
+      "sourceUrl": "https://github.com/juniorguru/junior.guru/blob/c916e446ee/juniorguru/mkdocs/docs/topics/pyladies.md",
+      "words": 296
+    },
+    {
+      "file": "jg/handbook__cv.md",
+      "repo": "jg",
+      "license": "CC BY-SA 4.0 for content (LICENSE)",
+      "firstCommit": "2022-01-07",
+      "revision": "1605f249f0",
+      "revisionDate": "2022-10-04",
+      "sourceUrl": "https://github.com/juniorguru/junior.guru/blob/1605f249f0/juniorguru/mkdocs/docs/handbook/cv.md",
+      "words": 4203
+    },
+    {
+      "file": "jg/handbook__index.md",
+      "repo": "jg",
+      "license": "CC BY-SA 4.0 for content (LICENSE)",
+      "firstCommit": "2021-09-01",
+      "revision": "ff15cf0a42",
+      "revisionDate": "2022-10-04",
+      "sourceUrl": "https://github.com/juniorguru/junior.guru/blob/ff15cf0a42/juniorguru/mkdocs/docs/handbook/index.md",
+      "words": 354
+    },
+    {
+      "file": "jg/handbook__motivation.md",
+      "repo": "jg",
+      "license": "CC BY-SA 4.0 for content (LICENSE)",
+      "firstCommit": "2021-09-01",
+      "revision": "406e11d40e",
+      "revisionDate": "2022-10-04",
+      "sourceUrl": "https://github.com/juniorguru/junior.guru/blob/406e11d40e/juniorguru/mkdocs/docs/handbook/motivation.md",
+      "words": 4034
+    },
+    {
+      "file": "jg/event.md",
+      "repo": "jg",
+      "license": "CC BY-SA 4.0 for content (LICENSE)",
+      "firstCommit": "2022-10-19",
+      "revision": "76ef8687fd",
+      "revisionDate": "2022-11-01",
+      "sourceUrl": "https://github.com/juniorguru/junior.guru/blob/76ef8687fd/juniorguru/mkdocs/docs/event.md",
+      "words": 514
+    },
+    {
+      "file": "jg/handbook__git.md",
+      "repo": "jg",
+      "license": "CC BY-SA 4.0 for content (LICENSE)",
+      "firstCommit": "2022-01-07",
+      "revision": "56ed663e06",
+      "revisionDate": "2022-10-06",
+      "sourceUrl": "https://github.com/juniorguru/junior.guru/blob/56ed663e06/juniorguru/mkdocs/docs/handbook/git.md",
+      "words": 3746
+    },
+    {
+      "file": "jg/club.md",
+      "repo": "jg",
+      "license": "CC BY-SA 4.0 for content (LICENSE)",
+      "firstCommit": "2021-07-30",
+      "revision": "a2683839a8",
+      "revisionDate": "2022-12-30",
+      "sourceUrl": "https://github.com/juniorguru/junior.guru/blob/a2683839a8/juniorguru/mkdocs/docs/club.md",
+      "words": 790
+    },
+    {
+      "file": "jg/faq.md",
+      "repo": "jg",
+      "license": "CC BY-SA 4.0 for content (LICENSE)",
+      "firstCommit": "2021-08-14",
+      "revision": "f613bc9592",
+      "revisionDate": "2022-09-14",
+      "sourceUrl": "https://github.com/juniorguru/junior.guru/blob/f613bc9592/juniorguru/mkdocs/docs/faq.md",
+      "words": 2638
+    },
+    {
+      "file": "jg/coc.md",
+      "repo": "jg",
+      "license": "CC BY-SA 4.0 for content (LICENSE)",
+      "firstCommit": "2021-08-02",
+      "revision": "3087bb595b",
+      "revisionDate": "2022-09-13",
+      "sourceUrl": "https://github.com/juniorguru/junior.guru/blob/3087bb595b/juniorguru/mkdocs/docs/coc.md",
+      "words": 819
+    },
+    {
+      "file": "jg/handbook__linkedin.md",
+      "repo": "jg",
+      "license": "CC BY-SA 4.0 for content (LICENSE)",
+      "firstCommit": "2022-01-07",
+      "revision": "1605f249f0",
+      "revisionDate": "2022-10-04",
+      "sourceUrl": "https://github.com/juniorguru/junior.guru/blob/1605f249f0/juniorguru/mkdocs/docs/handbook/linkedin.md",
+      "words": 2253
+    },
+    {
+      "file": "jg/handbook__mental-health.md",
+      "repo": "jg",
+      "license": "CC BY-SA 4.0 for content (LICENSE)",
+      "firstCommit": "2022-04-26",
+      "revision": "f0ba502719",
+      "revisionDate": "2022-10-03",
+      "sourceUrl": "https://github.com/juniorguru/junior.guru/blob/f0ba502719/juniorguru/mkdocs/docs/handbook/mental-health.md",
+      "words": 835
+    },
+    {
+      "file": "jg/tos.md",
+      "repo": "jg",
+      "license": "CC BY-SA 4.0 for content (LICENSE)",
+      "firstCommit": "2021-03-30",
+      "revision": "a2683839a8",
+      "revisionDate": "2022-12-30",
+      "sourceUrl": "https://github.com/juniorguru/junior.guru/blob/a2683839a8/juniorguru/mkdocs/docs/tos.md",
+      "words": 2299
+    },
+    {
+      "file": "jg/handbook__practice.md",
+      "repo": "jg",
+      "license": "CC BY-SA 4.0 for content (LICENSE)",
+      "firstCommit": "2021-09-15",
+      "revision": "0fc11f2b03",
+      "revisionDate": "2022-12-08",
+      "sourceUrl": "https://github.com/juniorguru/junior.guru/blob/0fc11f2b03/juniorguru/mkdocs/docs/handbook/practice.md",
+      "words": 1046
+    },
+    {
+      "file": "jg/open.md",
+      "repo": "jg",
+      "license": "CC BY-SA 4.0 for content (LICENSE)",
+      "firstCommit": "2021-12-21",
+      "revision": "0f523d2c24",
+      "revisionDate": "2022-12-31",
+      "sourceUrl": "https://github.com/juniorguru/junior.guru/blob/0f523d2c24/juniorguru/mkdocs/docs/open.md",
+      "words": 1571
+    },
+    {
+      "file": "jg/speaker.md",
+      "repo": "jg",
+      "license": "CC BY-SA 4.0 for content (LICENSE)",
+      "firstCommit": "2022-02-08",
+      "revision": "abf65c0d4b",
+      "revisionDate": "2022-11-10",
+      "sourceUrl": "https://github.com/juniorguru/junior.guru/blob/abf65c0d4b/juniorguru/mkdocs/docs/speaker.md",
+      "words": 1004
+    },
+    {
+      "file": "jg/handbook__learn.md",
+      "repo": "jg",
+      "license": "CC BY-SA 4.0 for content (LICENSE)",
+      "firstCommit": "2021-09-13",
+      "revision": "0fc11f2b03",
+      "revisionDate": "2022-12-08",
+      "sourceUrl": "https://github.com/juniorguru/junior.guru/blob/0fc11f2b03/juniorguru/mkdocs/docs/handbook/learn.md",
+      "words": 1369
+    },
+    {
+      "file": "jg/privacy.md",
+      "repo": "jg",
+      "license": "CC BY-SA 4.0 for content (LICENSE)",
+      "firstCommit": "2021-03-30",
+      "revision": "a2683839a8",
+      "revisionDate": "2022-12-30",
+      "sourceUrl": "https://github.com/juniorguru/junior.guru/blob/a2683839a8/juniorguru/mkdocs/docs/privacy.md",
+      "words": 1110
+    },
+    {
+      "file": "naucse-python/beginners__micropython__index.md",
+      "repo": "naucse-python",
+      "license": "CC BY-SA 4.0 (per-lesson info.yml: license: cc-by-sa-40)",
+      "firstCommit": "2017-05-19",
+      "revision": "e4e8ff84ad",
+      "revisionDate": "2018-05-15",
+      "sourceUrl": "https://github.com/pyvec/naucse-python/blob/e4e8ff84ad/lessons/beginners/micropython/index.md",
+      "words": 3839
+    },
+    {
+      "file": "naucse-python/beginners__reassignment__index.md",
+      "repo": "naucse-python",
+      "license": "CC BY-SA 4.0 (per-lesson info.yml: license: cc-by-sa-40)",
+      "firstCommit": "2020-03-02",
+      "revision": "0d8f9c4e52",
+      "revisionDate": "2020-03-09",
+      "sourceUrl": "https://github.com/pyvec/naucse-python/blob/0d8f9c4e52/lessons/beginners/reassignment/index.md",
+      "words": 347
+    },
+    {
+      "file": "naucse-python/intro__cython__index.md",
+      "repo": "naucse-python",
+      "license": "CC BY-SA 4.0 (per-lesson info.yml: license: cc-by-sa-40)",
+      "firstCommit": "2017-02-13",
+      "revision": "4170b586f3",
+      "revisionDate": "2018-11-14",
+      "sourceUrl": "https://github.com/pyvec/naucse-python/blob/4170b586f3/lessons/intro/cython/index.md",
+      "words": 4237
+    },
+    {
+      "file": "naucse-python/beginners__install__windows.md",
+      "repo": "naucse-python",
+      "license": "CC BY-SA 4.0 (per-lesson info.yml: license: cc-by-sa-40)",
+      "firstCommit": "2017-02-24",
+      "revision": "1fa09cf406",
+      "revisionDate": "2018-08-29",
+      "sourceUrl": "https://github.com/pyvec/naucse-python/blob/1fa09cf406/lessons/beginners/install/windows.md",
+      "words": 179
+    },
+    {
+      "file": "naucse-python/intro__pyqt__index.md",
+      "repo": "naucse-python",
+      "license": "CC BY-SA 4.0 (per-lesson info.yml: license: cc-by-sa-40)",
+      "firstCommit": "2017-02-13",
+      "revision": "d1ba7322c7",
+      "revisionDate": "2019-12-20",
+      "sourceUrl": "https://github.com/pyvec/naucse-python/blob/d1ba7322c7/lessons/intro/pyqt/index.md",
+      "words": 4428
+    },
+    {
+      "file": "naucse-python/intro__deployment__index.md",
+      "repo": "naucse-python",
+      "license": "CC BY-SA 4.0 (per-lesson info.yml: license: cc-by-sa-40)",
+      "firstCommit": "2017-10-27",
+      "revision": "cc6559cf3e",
+      "revisionDate": "2017-11-06",
+      "sourceUrl": "https://github.com/pyvec/naucse-python/blob/cc6559cf3e/lessons/intro/deployment/index.md",
+      "words": 194
+    },
+    {
+      "file": "naucse-python/snake__logic__index.md",
+      "repo": "naucse-python",
+      "license": "CC BY-SA 4.0 (per-lesson info.yml: license: cc-by-sa-40)",
+      "firstCommit": "2018-03-25",
+      "revision": "288028aacf",
+      "revisionDate": "2018-03-27",
+      "sourceUrl": "https://github.com/pyvec/naucse-python/blob/288028aacf/lessons/snake/logic/index.md",
+      "words": 4372
+    },
+    {
+      "file": "naucse-python/beginners__install-editor__atom.md",
+      "repo": "naucse-python",
+      "license": "CC BY-SA 4.0 (per-lesson info.yml: license: cc-by-sa-40)",
+      "firstCommit": "2017-02-27",
+      "revision": "7d230048fa",
+      "revisionDate": "2019-03-04",
+      "sourceUrl": "https://github.com/pyvec/naucse-python/blob/7d230048fa/lessons/beginners/install-editor/atom.md",
+      "words": 224
+    },
+    {
+      "file": "naucse-python/intro__magic__index.md",
+      "repo": "naucse-python",
+      "license": "CC BY-SA 4.0 (per-lesson info.yml: license: cc-by-sa-40)",
+      "firstCommit": "2017-02-27",
+      "revision": "03740c3e5d",
+      "revisionDate": "2020-08-05",
+      "sourceUrl": "https://github.com/pyvec/naucse-python/blob/03740c3e5d/lessons/intro/magic/index.md",
+      "words": 3616
+    },
+    {
+      "file": "naucse-python/beginners__expressions__index.md",
+      "repo": "naucse-python",
+      "license": "CC BY-SA 4.0 (per-lesson info.yml: license: cc-by-sa-40)",
+      "firstCommit": "2019-08-24",
+      "revision": "d65ee4bb1f",
+      "revisionDate": "2020-01-08",
+      "sourceUrl": "https://github.com/pyvec/naucse-python/blob/d65ee4bb1f/lessons/beginners/expressions/index.md",
+      "words": 331
+    },
+    {
+      "file": "naucse-python/git__collaboration__index.md",
+      "repo": "naucse-python",
+      "license": "CC BY-SA 4.0 (per-lesson info.yml: license: cc-by-sa-40)",
+      "firstCommit": "2017-04-05",
+      "revision": "c09a8c736f",
+      "revisionDate": "2020-08-06",
+      "sourceUrl": "https://github.com/pyvec/naucse-python/blob/c09a8c736f/lessons/git/collaboration/index.md",
+      "words": 2527
+    },
+    {
+      "file": "naucse-python/beginners__while__index.md",
+      "repo": "naucse-python",
+      "license": "CC BY-SA 4.0 (per-lesson info.yml: license: cc-by-sa-40)",
+      "firstCommit": "2017-03-13",
+      "revision": "84aad4b169",
+      "revisionDate": "2020-06-03",
+      "sourceUrl": "https://github.com/pyvec/naucse-python/blob/84aad4b169/lessons/beginners/while/index.md",
+      "words": 374
+    },
+    {
+      "file": "naucse-python/intro__testing__index.md",
+      "repo": "naucse-python",
+      "license": "CC BY-SA 4.0 (per-lesson info.yml: license: cc-by-sa-40)",
+      "firstCommit": "2017-02-27",
+      "revision": "1d6e3ab5d6",
+      "revisionDate": "2020-11-29",
+      "sourceUrl": "https://github.com/pyvec/naucse-python/blob/1d6e3ab5d6/lessons/intro/testing/index.md",
+      "words": 3456
+    },
+    {
+      "file": "naucse-python/beginners__nested-traceback__index.md",
+      "repo": "naucse-python",
+      "license": "CC BY-SA 4.0 (per-lesson info.yml: license: cc-by-sa-40)",
+      "firstCommit": "2019-03-18",
+      "revision": "498705d38d",
+      "revisionDate": "2020-06-15",
+      "sourceUrl": "https://github.com/pyvec/naucse-python/blob/498705d38d/lessons/beginners/nested-traceback/index.md",
+      "words": 350
+    },
+    {
+      "file": "naucse-python/intro__async__index.md",
+      "repo": "naucse-python",
+      "license": "CC BY-SA 4.0 (per-lesson info.yml: license: cc-by-sa-40)",
+      "firstCommit": "2017-02-13",
+      "revision": "a03f1b46f9",
+      "revisionDate": "2020-12-19",
+      "sourceUrl": "https://github.com/pyvec/naucse-python/blob/a03f1b46f9/lessons/intro/async/index.md",
+      "words": 2692
+    },
+    {
+      "file": "derisking-handbook/handbook.md",
+      "repo": "derisking-handbook",
+      "license": "CC BY-SA 4.0 (LICENSE.txt)",
+      "firstCommit": "2019-08-16",
+      "revision": "7d69003013",
+      "revisionDate": "2022-05-27",
+      "sourceUrl": "https://github.com/cesko-digital/derisking-handbook/blob/7d69003013/handbook.md",
+      "words": 9124
+    },
+    {
+      "file": "derisking-handbook/handbook.md",
+      "repo": "derisking-handbook",
+      "license": "CC BY-SA 4.0 (LICENSE.txt)",
+      "firstCommit": "2019-08-16",
+      "revision": "7d69003013",
+      "revisionDate": "2022-05-27",
+      "sourceUrl": "https://github.com/cesko-digital/derisking-handbook/blob/7d69003013/handbook.md",
+      "words": 9124
+    },
+    {
+      "file": "blog/2021__2021-4-28-rozhovor-bakala.md",
+      "repo": "blog",
+      "license": "MIT (LICENSE)",
+      "firstCommit": "2021-04-28",
+      "revision": "12383e94b3",
+      "revisionDate": "2022-01-28",
+      "sourceUrl": "https://github.com/cesko-digital/blog/blob/12383e94b3/content/posts/2021/2021-4-28-rozhovor-bakala.md",
+      "words": 4011
+    },
+    {
+      "file": "blog/2020__2020-1-30-prirucka.md",
+      "repo": "blog",
+      "license": "MIT (LICENSE)",
+      "firstCommit": "2020-01-30",
+      "revision": "59609cbb70",
+      "revisionDate": "2022-01-21",
+      "sourceUrl": "https://github.com/cesko-digital/blog/blob/59609cbb70/content/posts/2020/2020-1-30-prirucka.md",
+      "words": 182
+    },
+    {
+      "file": "blog/2019__2019-09-20-rozhovor-nesetril.md",
+      "repo": "blog",
+      "license": "MIT (LICENSE)",
+      "firstCommit": "2019-09-23",
+      "revision": "3a9565beed",
+      "revisionDate": "2020-09-12",
+      "sourceUrl": "https://github.com/cesko-digital/blog/blob/3a9565beed/content/posts/2019/2019-09-20-rozhovor-nesetril.md",
+      "words": 3343
+    },
+    {
+      "file": "blog/2019__2019-08-10-novinky.md",
+      "repo": "blog",
+      "license": "MIT (LICENSE)",
+      "firstCommit": "2019-09-23",
+      "revision": "3a9565beed",
+      "revisionDate": "2020-09-12",
+      "sourceUrl": "https://github.com/cesko-digital/blog/blob/3a9565beed/content/posts/2019/2019-08-10-novinky.md",
+      "words": 314
+    },
+    {
+      "file": "blog/2020__2020-12-21-vyrocni-rozhovor.md",
+      "repo": "blog",
+      "license": "MIT (LICENSE)",
+      "firstCommit": "2020-12-18",
+      "revision": "946b6b676d",
+      "revisionDate": "2020-12-18",
+      "sourceUrl": "https://github.com/cesko-digital/blog/blob/946b6b676d/content/posts/2020/2020-12-21-vyrocni-rozhovor.md",
+      "words": 3275
+    },
+    {
+      "file": "blog/2021__2021-08-01-cirkularni-ekonomika.md",
+      "repo": "blog",
+      "license": "MIT (LICENSE)",
+      "firstCommit": "2021-08-01",
+      "revision": "e0bbb10c89",
+      "revisionDate": "2022-01-21",
+      "sourceUrl": "https://github.com/cesko-digital/blog/blob/e0bbb10c89/content/posts/2021/2021-08-01-cirkularni-ekonomika.md",
+      "words": 347
+    },
+    {
+      "file": "blog/2021__2021-4-30-rozhovor-nedluzim-statu.md",
+      "repo": "blog",
+      "license": "MIT (LICENSE)",
+      "firstCommit": "2021-04-30",
+      "revision": "90fc25fbe8",
+      "revisionDate": "2022-01-17",
+      "sourceUrl": "https://github.com/cesko-digital/blog/blob/90fc25fbe8/content/posts/2021/2021-4-30-rozhovor-nedluzim-statu.md",
+      "words": 2778
+    },
+    {
+      "file": "blog/2020__2020-3-12-hlidac-insolvenci.md",
+      "repo": "blog",
+      "license": "MIT (LICENSE)",
+      "firstCommit": "2020-03-12",
+      "revision": "3a9565beed",
+      "revisionDate": "2020-09-12",
+      "sourceUrl": "https://github.com/cesko-digital/blog/blob/3a9565beed/content/posts/2020/2020-3-12-hlidac-insolvenci.md",
+      "words": 355
+    },
+    {
+      "file": "blog/2021__2021-3-25-rozhovor-ucime-online.md",
+      "repo": "blog",
+      "license": "MIT (LICENSE)",
+      "firstCommit": "2021-03-25",
+      "revision": "90fc25fbe8",
+      "revisionDate": "2022-01-17",
+      "sourceUrl": "https://github.com/cesko-digital/blog/blob/90fc25fbe8/content/posts/2021/2021-3-25-rozhovor-ucime-online.md",
+      "words": 2312
+    },
+    {
+      "file": "blog/2021__2021-08-17-zacniucit-web.md",
+      "repo": "blog",
+      "license": "MIT (LICENSE)",
+      "firstCommit": "2021-08-17",
+      "revision": "90fc25fbe8",
+      "revisionDate": "2022-01-17",
+      "sourceUrl": "https://github.com/cesko-digital/blog/blob/90fc25fbe8/content/posts/2021/2021-08-17-zacniucit-web.md",
+      "words": 366
+    },
+    {
+      "file": "blog/2021__2021-8-24-leadership-rozhovor-2.md",
+      "repo": "blog",
+      "license": "MIT (LICENSE)",
+      "firstCommit": "2021-08-24",
+      "revision": "f63b0c75b3",
+      "revisionDate": "2021-08-24",
+      "sourceUrl": "https://github.com/cesko-digital/blog/blob/f63b0c75b3/content/posts/2021/2021-8-24-leadership-rozhovor-2.md",
+      "words": 2237
+    },
+    {
+      "file": "blog/2021__2021-2-15-livesport.md",
+      "repo": "blog",
+      "license": "MIT (LICENSE)",
+      "firstCommit": "2021-02-15",
+      "revision": "abc6190a14",
+      "revisionDate": "2022-01-28",
+      "sourceUrl": "https://github.com/cesko-digital/blog/blob/abc6190a14/content/posts/2021/2021-2-15-livesport.md",
+      "words": 400
+    },
+    {
+      "file": "blog/2019__2019-11-7-rozhovor-vereha.md",
+      "repo": "blog",
+      "license": "MIT (LICENSE)",
+      "firstCommit": "2019-10-17",
+      "revision": "3a9565beed",
+      "revisionDate": "2020-09-12",
+      "sourceUrl": "https://github.com/cesko-digital/blog/blob/3a9565beed/content/posts/2019/2019-11-7-rozhovor-vereha.md",
+      "words": 2160
+    },
+    {
+      "file": "blog/2021__2021-2-8-nova-ceo.md",
+      "repo": "blog",
+      "license": "MIT (LICENSE)",
+      "firstCommit": "2021-02-22",
+      "revision": "7b44e31186",
+      "revisionDate": "2021-02-22",
+      "sourceUrl": "https://github.com/cesko-digital/blog/blob/7b44e31186/content/posts/2021/2021-2-8-nova-ceo.md",
+      "words": 423
+    },
+    {
+      "file": "blog/2021__2021-8-13-leadership-rozhovor-1.md",
+      "repo": "blog",
+      "license": "MIT (LICENSE)",
+      "firstCommit": "2021-08-13",
+      "revision": "b657395af0",
+      "revisionDate": "2021-08-13",
+      "sourceUrl": "https://github.com/cesko-digital/blog/blob/b657395af0/content/posts/2021/2021-8-13-leadership-rozhovor-1.md",
+      "words": 2092
+    },
+    {
+      "file": "blog/2021__2021-6-10-zmena-mysleni.md",
+      "repo": "blog",
+      "license": "MIT (LICENSE)",
+      "firstCommit": "2021-06-10",
+      "revision": "4a6d18f8d3",
+      "revisionDate": "2022-01-21",
+      "sourceUrl": "https://github.com/cesko-digital/blog/blob/4a6d18f8d3/content/posts/2021/2021-6-10-zmena-mysleni.md",
+      "words": 406
+    },
+    {
+      "file": "blog/2022__2022-11-16-kdyz-vam-kryje-zada-cesko-digital.md",
+      "repo": "blog",
+      "license": "MIT (LICENSE)",
+      "firstCommit": "2022-11-16",
+      "revision": "9bcb757a8e",
+      "revisionDate": "2022-11-16",
+      "sourceUrl": "https://github.com/cesko-digital/blog/blob/9bcb757a8e/content/posts/2022/2022-11-16-kdyz-vam-kryje-zada-cesko-digital.md",
+      "words": 2102
+    }
+  ],
+  "totalWords": 117541
+}

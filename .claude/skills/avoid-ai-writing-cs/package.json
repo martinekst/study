@@ -1,0 +1,13 @@
+{
+  "name": "avoid-ai-writing-cs",
+  "version": "0.8.0",
+  "private": true,
+  "description": "Detekce a redakce AI tellů v českém textu (deterministický detektor + úsudková vrstva)",
+  "scripts": {
+    "test": "node detector/cs-patterns.test.js && node detector/test-corpus.test.js",
+    "fp": "node scripts/fp-measure.js",
+    "bench": "node scripts/bench.js",
+    "roc": "node scripts/roc.js",
+    "scan": "node detector/cs-scan.js"
+  }
+}

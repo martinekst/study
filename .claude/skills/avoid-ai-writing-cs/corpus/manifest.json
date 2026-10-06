@@ -1,0 +1,63 @@
+{
+  "version": 1,
+  "purpose": "Lidský český kontrolní korpus pro měření falešně pozitivních (scripts/fp-measure.js). Detektor na těchto textech musí zůstat pod prahem maxScore; když nové pravidlo práh prolomí, je špatně pravidlo, ne korpus.",
+  "license": "CC BY-SA 4.0 (texty z české Wikipedie, plné znění commitnuté v texts/, atribuce = pole source)",
+  "maxScore": 25,
+  "documents": [
+    {
+      "id": "wiki-navrhovy-vzor",
+      "file": "navrhovy-vzor.md",
+      "title": "Návrhový vzor",
+      "source": "https://cs.wikipedia.org/wiki/N%C3%A1vrhov%C3%BD_vzor",
+      "retrieved": "2026-08-14",
+      "register": "encyklopedický, softwarové inženýrství",
+      "sha256": "11214977d114119ab00e169703287749c142a979e47300b3b5a42b3afdff5ec4",
+      "words": 1739,
+      "baselineScore": 0
+    },
+    {
+      "id": "wiki-projektove-rizeni",
+      "file": "projektove-rizeni.md",
+      "title": "Projektové řízení",
+      "source": "https://cs.wikipedia.org/wiki/Projektov%C3%A9_%C5%99%C3%ADzen%C3%AD",
+      "retrieved": "2026-08-14",
+      "register": "encyklopedický, management",
+      "sha256": "cc4d33ed133bc326a2ae9a1da17f7f313d2a37553cda6442e2c483e21a40b7f9",
+      "words": 1453,
+      "baselineScore": 4
+    },
+    {
+      "id": "wiki-refaktorovani",
+      "file": "refaktorovani.md",
+      "title": "Refaktorování",
+      "source": "https://cs.wikipedia.org/wiki/Refaktorov%C3%A1n%C3%AD",
+      "retrieved": "2026-08-14",
+      "register": "encyklopedický, softwarové inženýrství",
+      "sha256": "f04a3cb30b54d29509880f1f7286f3a0190efe598b5c0026f5fcd64b6c7c5961",
+      "words": 951,
+      "baselineScore": 8
+    },
+    {
+      "id": "wiki-softwarove-inzenyrstvi",
+      "file": "softwarove-inzenyrstvi.md",
+      "title": "Softwarové inženýrství",
+      "source": "https://cs.wikipedia.org/wiki/Softwarov%C3%A9_in%C5%BEen%C3%BDrstv%C3%AD",
+      "retrieved": "2026-08-14",
+      "register": "encyklopedický, softwarové inženýrství",
+      "sha256": "d80db6443f76591efe09491251e4630a0eb032fd79f94a0726447ef3db7fbef9",
+      "words": 1176,
+      "baselineScore": 6
+    },
+    {
+      "id": "wiki-testovani-softwaru",
+      "file": "testovani-softwaru.md",
+      "title": "Testování softwaru",
+      "source": "https://cs.wikipedia.org/wiki/Testov%C3%A1n%C3%AD_softwaru",
+      "retrieved": "2026-08-14",
+      "register": "encyklopedický, softwarové inženýrství",
+      "sha256": "c7d382063c349b90c910629cc49772d9e7b8c768588834dd495b224dc83a0571",
+      "words": 3772,
+      "baselineScore": 8
+    }
+  ]
+}

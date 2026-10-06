@@ -1,0 +1,160 @@
+@startuml
+!theme plain
+
+' Styly ----------------------------
+<style>
+.enum {
+  BackgroundColor #D6EAF8
+}
+</style>
+
+' Entity -------------------------
+
+class Person {
+  firstName : string
+  lastName : string
+  middleName : string
+  birthNumber : string
+  phone : string
+  email : string
+  sex : string
+  createdAt : datetime
+  lastModifiedAt : datetime
+  'residenceAddress : Address
+  'mailingAddress : Address
+  nationality: string
+}
+
+class Address {
+  street : string
+  streetNumber : string
+  houseNumber : string
+  city : string
+  country : string
+  postalCode : string
+}
+
+class PersonProduct {
+  caseId : uuid
+  tenant : string
+  refNo : string
+  product : string
+  state : string
+  createdAt : dateTime
+  bonusPriceId : uuid
+}
+
+class Transfer {
+  sourceRefNo : string
+  sourceProduct : PersonProduct
+  sourceTenant : string
+  targetRefNo : string
+  targetProduct : PersonProduct
+  targetTenant : string
+  transferredAt : datetime
+  createdAt : datetime
+  lastModifiedAt : datetime
+}
+
+class BonusPrice {
+  product : string
+  expirationTime : number
+  discount : number
+  used : boolean
+}
+
+class PersonDocument {
+  type : string
+  number : string
+  expiration : date
+  filesRefNo : string
+  photoId : string
+  verificationSource : string
+  autoCheck : string
+  checkedAt : datetime
+  checkedBy : string
+}
+
+class ArbitrationCase {
+  referenceNumber : string
+  status : ArbitrationCaseStatus
+  startDate : date
+  endDate : date
+  subject : ArbitrationCaseSubject
+  involvedParties : ArbitrationCaseInvolvedParties
+  outcome : ArbitrationCaseOutcome
+  ruledInFavorOf : ArbitrationCaseRuledInFavorOf
+  note : string
+}
+
+' Ciselniky ----------------------
+enum ArbitrationCaseStatus <<enum>> {
+  ACTIVE
+  RESOLVED
+  DISMISSED
+  DELETED
+}
+
+enum ArbitrationCaseSubject <<enum>> {
+  INTEREST_RATE_CHANGE
+  LOAN_CONTRACT_INVALIDITY
+  INSUFF_PRECONTRACT_INFO
+  INTEREST_RATE
+  APR
+  APR_NOT_SPECIFIED
+  UNJUSTIFIED_DEBT_COLLECTION
+  UNREASONABLE_CONTACT
+}
+
+enum ArbitrationCaseInvolvedParties <<enum>> {
+  CONSUMER
+  CONSUMER_NB
+  CONSUMER_FINARB
+  CONSUMER_NB_FINARB
+}
+
+enum ArbitrationCaseOutcome <<enum>> {
+  SETTLEMENT_AGREEMENT
+  TERMINATED_INACTIVITY
+  WITHDRAWAL_OF_PROPOSAL
+  TERMINATED_INSUFFICIENT_PROPOSAL
+  CONCLUDED_ARBITRATION_AWARD
+}
+
+enum ArbitrationCaseRuledInFavorOf <<enum>> {
+  CONSUMER
+  CREDITOR
+}
+
+enum DocumetType <<enum>> {
+  ID_CARD
+  PERMANENT_RESIDENCE
+}
+
+enum VerificationSource <<enum>> {
+  manual
+  bankId
+  autocheck
+}
+
+' Vztahy mezi entitami ----------------------
+Person o-- "1" Address : residenceAddress
+Person o-- "1" Address : mailingAddress
+Person "1" *-- "1..*" PersonProduct
+Person "1" *-- "0..*" Transfer
+Person --> "1..*" BonusPrice
+Person "1" *-- "1..*" PersonDocument
+Person "1" *-- "0..*" ArbitrationCase
+Transfer o-- "1" PersonProduct
+'Transfer o-- "1" PersonProduct : targetProduct
+PersonProduct --> BonusPrice
+ArbitrationCase o-- "1..*" PersonProduct
+ArbitrationCase --> ArbitrationCaseSubject
+ArbitrationCase --> ArbitrationCaseInvolvedParties
+ArbitrationCase --> ArbitrationCaseStatus
+ArbitrationCase --> ArbitrationCaseOutcome
+ArbitrationCase --> ArbitrationCaseRuledInFavorOf
+PersonDocument --> DocumetType
+PersonDocument --> VerificationSource
+
+@enduml

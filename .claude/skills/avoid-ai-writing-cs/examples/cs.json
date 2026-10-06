@@ -1,0 +1,17 @@
+{
+  "name": "Česká sazba a věcný styl",
+  "genre": "české B2B texty, dokumentace a nabídky",
+  "register": [
+    "Konkrétní tvrzení: čísla, jména, data. Tvrzení o kvalitě se dokládá, nebo vypouští.",
+    "Bez vaty: „je důležité poznamenat“, „v neposlední řadě“, „v dnešní době“ se škrtají bez náhrady.",
+    "Dlouhá pomlčka — se jako spojka věty nepoužívá: dvojtečka, závorka, středník, nebo dvě věty. Pomlčka – s mezerami střídmě; rozsahy 1–3 pomlčkou bez mezer.",
+    "České uvozovky „ “; rovné \" jen v kódu a identifikátorech.",
+    "Procenta: 70 % s mezerou znamená sedmdesát procent; 70% bez mezery jen jako přídavné jméno.",
+    "Trojice členů nejsou výchozí rytmus: dva nebo čtyři, když to obsah nese.",
+    "Emoji nepatří do nadpisů ani odrážek."
+  ],
+  "mechanics": {
+    "headings": "sentence",
+    "emDash": "sparing"
+  }
+}

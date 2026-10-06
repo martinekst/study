@@ -1,0 +1,50 @@
+{
+  "behavioralFields": [
+    "active_version",
+    "lifecycle_stage",
+    "deliverable_type",
+    "sections",
+    "functional_views"
+  ],
+  "lifecycleStages": ["discovery", "implementation-ready", "as-built"],
+  "deliverableTypes": ["documentation", "offer"],
+  "sections": {
+    "business": {
+      "skill": "docs-business",
+      "directoryAliases": ["business", "byznys-specifikace", "byznysova-specifikace"]
+    },
+    "functional": {
+      "skill": "docs-functional",
+      "directoryAliases": ["functional", "funkcni-specifikace"]
+    },
+    "technical": {
+      "skill": "docs-technical",
+      "directoryAliases": ["technical", "technicka-specifikace"]
+    },
+    "tests": { "skill": "docs-tests", "directoryAliases": ["tests", "testy"] },
+    "change-requests": {
+      "skill": "docs-change-requests",
+      "directoryAliases": ["change-requests", "zmenove-pozadavky"]
+    }
+  },
+  "functionalViews": {
+    "scenario": "resources/templates/scenario.md",
+    "process": "resources/views/process",
+    "ui": "resources/views/ui"
+  },
+  "functionalViewDirectoryAliases": {
+    "scenario": ["scenario", "scenarios", "scenare"],
+    "process": ["process", "processes", "proces", "procesy"],
+    "ui": ["ui", "screens", "screen", "obrazovky", "obrazovka"]
+  },
+  "operations": [
+    "create",
+    "update",
+    "backfill",
+    "extend-from-spec",
+    "extend-from-code",
+    "migrate-contract",
+    "review",
+    "apply-report"
+  ]
+}
