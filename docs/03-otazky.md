@@ -1,0 +1,86 @@
+# Otázky k modelu Q1 2027 (fáze 1)
+
+Práh pro otázku (zadání, bod 6): dopad na výsledek skupiny za Q1 2027 nad **2 % nákladů skupiny za Q1**.
+Základ: plán Q4 2026, náklady skupiny 13 252 tis. Kč → práh ≈ **265 tis. Kč za kvartál**.
+Co je pod prahem nebo jen přesouvá peníze uvnitř skupiny, je v části B jako předpoklad.
+
+Seřazeno podle dopadu. U každé otázky je výchozí předpoklad, pokud neodpovíš.
+
+## A. Otázky
+
+### Q1. Existuje plán 2027? (povinná)
+Rozpočet končí 12/2026, sloupce 2027 v přefakturacích jsou prázdné, TIO predikce je jen 2026.
+- a) **Neexistuje** → model pojede z run-rate plánu 10–12/2026 (lidé, sazby, fakturovatelnost, TIO Q4). *(výchozí)*
+- b) Existuje částečně (lidé / sazby / pipeline), pošlu.
+- c) Existuje kompletní, pošlu odkaz.
+Dopad: celý výnos TF, 6–7 mil. Kč/Q.
+
+### Q2. Základna pro run-rate
+- a) **Plán 10–12/2026 z rozpočtu** (TF příjem 2,4 → 1,7 mil. Kč/měs; skupina ve ztrátě 0,7–1,5 mil./měs). *(výchozí, doporučeno)*
+- b) Skutečnost 7–8/2026 z uzávěrky (obrat 5,2 a 3,9 mil. Kč/měs).
+- c) Průměr obojího.
+Dopad: rozdíl mezi a) a b) ≈ 8 mil. Kč výnosů za Q1.
+
+### Q3. Které parametry TF převzít z plánu 10–12/2026 beze změny? (více možností)
+- Počty lidí na realizaci 16,5 (Dev 0+1+6, TL 2+2, QA 2, AN 2, PM 1,5).
+- Sazby (Dev 8 000 / 8 500 / 9 000, TL 11 000, QA 9 000, AN 7 950, PM 6 900 Kč/MD).
+- Fakturovatelnost (Dev 80 %, TL 60 %, QA 75 %, AN 75 %, PM 83 %).
+- Nic z toho, dodám jiné hodnoty.
+*(výchozí: všechny tři)*. Dopad: každý parametr samostatně > 600 tis. Kč/Q.
+
+### Q4. Výsledek před, nebo po odměnách boardu? (povinná)
+- a) **Obojí**: „Výsledek před odměnami boardu“, pod ním blok odměn (fix + variabilní), finální „Výsledek po odměnách“ = metodika uzávěrky. *(výchozí, doporučeno)*
+- b) Jen po odměnách (board jako běžný režijní náklad).
+- c) Jen před odměnami (board mimo model).
+Dopad: 5 × 209 200 × 3 ≈ 3,1 mil. Kč/Q.
+
+### Q5. Jak modelovat odměny boardu v Q1 2027
+- a) **Fix 5 × 123 200 = 616 tis./měs + variabilní část z výsledku modelu** podle pravidel 2026 (cíl obrat/profitabilita, plovoucí váhy), parametry 2026. *(výchozí, doporučeno)*
+- b) Nárok při splnění cíle 5 × 209 200 = 1 046 tis./měs, bez vazby na výsledek.
+- c) Run-rate nároku H2 2026 (~450 tis./měs).
+- d) Jiné parametry 2027 (minimální mzda 2027, násobek, cíle, budget), pošlu.
+Dopad: a) vs b) ≈ 1,3 mil. Kč/Q.
+
+### Q6. Na co odsouhlasit model (kritérium 2 %)
+- a) **Metodika Manažerské uzávěrky** (Σ výsledků firem − nevybrané odměny boardu), aplikovaná na plán **11/2026** z rozpočtu. *(výchozí, doporučeno)*
+- b) Metodika uzávěrky, **Q4 2026 celkem**.
+- c) Řádek Profit „Pohled BEZ přefakturace“ listu Skupina, 11/2026 (−676 tis.).
+- d) Řádek Profit „Pohled BEZ přefakturace“, Q4 2026 celkem (−2 973 tis.).
+Poznámka: 12/2026 obsahuje roční dorovnání boardu 1 435 tis., proto ne 12/2026. Pohled BEZ v rozpočtu není čistá konsolidace (docs/02, kap. 4.2).
+
+### Q7. Fixní smlouvy beze změny v Q1 2027?
+Nájem a energie Titanium (DBG_OFFICE ~614 tis./měs), účetní Fullcom, paušály DBG (206 504 / 31 604 / 7 500), licence, O2/internet.
+- a) **Ano, vše beze změny.** *(výchozí)*
+- b) Nájem se mění (uvedu výši a od kdy).
+- c) Mění se více věcí (uvedu).
+Dopad: nájem 1,8 mil. Kč/Q; změna o 15 % překročí práh.
+
+### Q8. Pravidlo fixní / variabilní (docs/02, kap. 10)
+- a) **Schvaluji návrh**: V = externisté, outsource dodavatelé, variabilní odměny AM, cloud účtovaný klientům; P (polo-fixní lidé) = interní tým, HR, sales fix, BDR, administrativa, úklid; F = smlouvy, licence, režie; board zvlášť. *(výchozí)*
+- b) Interní tým brát jako fixní (bez samostatného bloku P).
+- c) Upravím (napíšu).
+
+### Q9. TIO fee v modelu (jen pohled na firmy, pro skupinu nulový dopad)
+- a) **10 % z manažerského obratu TF** (rozpočet 2026). *(výchozí)*
+- b) 13 % + zisk outsource projektů (Confluence).
+- c) Nastavit tak, aby TIO vyšlo na nulu (jako při revizích).
+
+### Q10. RTSG v Q1 2027 (pro skupinu < 50 tis. Kč/Q, otázka strukturální)
+- a) **Pokračuje beze změny** (nájem DBG 75,2 tis., paušál 7,5 tis., účetní, licence; fakturuje TF podle potřeby). *(výchozí)*
+- b) Ukončuje se / slučuje k datu (uvedu).
+
+## B. Předpoklady (pod prahem nebo jen IC), platí, pokud neřekneš jinak
+
+1. **RE_INV_DBG v TF** (132–292 tis./měs) = zbytek adm. paušálu 126 504 Kč (IC) + drobné odměny lidí DBG vyplacené v TF. Bereme jako IC, reálný náklad administrativy je v DBG (ADM_WAGES ~70 tis./měs). Bez dvojího započtení.
+2. **Kurz EUR** pro nájem TF (16 040 EUR): 24,2 Kč/EUR (implicitně z uzávěrky). Jen IC.
+3. **Energie**: roční vyúčtování Titanium nemodelujeme zvlášť, zálohy jsou v DBG_OFFICE.
+4. **HW pronájem** DBG → firmy: IC; reálný náklad DBG = nákupy HW (cash), v Q1 2027 = 0.
+5. **Dohledané/nedohledané rozdíly, nedaňové náklady, nevybrané odměny z minulých let**: nemodelujeme.
+6. **Přefakturace TF → TIO** (~8 tis./měs) a **RTSG → TF**: IC, reálné náklady zůstávají tam, kde vznikají (TF, RTSG).
+7. **Pracovní dny Q1 2027**: leden 20, únor 20, březen 21 (Velký pátek 26.3., Velikonoční pondělí 29.3.). Koeficient na dovolené/nemoci z Číselníků (1,00 / 1,07 / 1,06) → plán MD ≈ 20,0 / 18,7 / 19,8.
+8. **TIO externí výnosy** Q1 2027 = run-rate Q4 2026: fee za zprostředkování ~50 tis./měs (15 % GMV), TIO outsource 0. Sales mzdy AM ~120 tis., BDR 25 tis./měs.
+9. **Rozpad boardu**: procenta 9–12/2026 (DBG 12 % / TF 47,6 % / TIO 40,4 % / RTSG 0 %).
+10. **Vyblokované kapacity**: TL 8 %, PM 20 %, AN 3 % (plán 12/2026).
+11. **Jednotky**: tis. Kč bez DPH, měsíce 1–3/2027 + Q1.
+12. **Google Sheet**: nový soubor „2027-Q1 Model skupiny“ ve tvém Drive, listy Předpoklady, Model A, Model B, Porovnání. Existující rozpočet se nemění.
+13. **DBG a RTSG** mají externí výnosy 0 (jako v uzávěrce).
