@@ -47,6 +47,8 @@ Princip = manažerské účetnictví:
    Soubor má sloužit jako kontext pro další práci s AI, piš ho tak.
 3. `docs/03-otazky.md` + stejné otázky mi polož **interaktivně** (klikací volby, ano/ne, kde to jen jde).
    Max 15 otázek, seřazené podle dopadu na výsledek. U každé napiš, co předpokládáš, pokud neodpovím.
+   Vždy zařaď: (a) výsledek před, nebo po odměnách boardu DBG, (b) zda existuje plán 2027
+   (počty lidí, sazby, fakturovatelnost), nebo se jede z run-rate konce 2026.
 4. **Po mých odpovědích:** dva vyplněné modely A a B (viz bod 4) + `docs/04-porovnani-modelu.md`
    s doporučením, který model používat dál a proč.
 
@@ -62,17 +64,16 @@ Oba modely mají **stejné vstupy a stejné předpoklady**, liší se jen uspoř
   Skupina = součet firem − eliminace.
 
 Společné pro oba:
-- Měsíce 1–3/2027 + sloupec Q1. Jednotky **tis. Kč bez DPH** (ověř proti současnému souboru).
+- Měsíce 1–3/2027 + sloupec Q1. Jednotky **tis. Kč bez DPH**.
 - Vstupy (předpoklady, drivery) odděleně od výpočtů. Každý předpoklad má poznámku, odkud je.
 - Umístění: **nový Google Sheet** „2027-Q1 Model skupiny“, jeden list na model + list „Předpoklady“.
-  (Alternativa: `.xlsx` v repu. Vyber jedno a řekni proč.)
 
 ## 5. Kritéria přijetí (kontroluj po každé iteraci)
 
 - Součet intercompany výnosů a nákladů za skupinu = 0.
 - Každá nákladová kategorie z listu Číselníky je přiřazena právě jedné firmě a právě jednomu typu (fixní/variabilní).
 - Když model naplníš daty posledního naplánovaného měsíce 2026, výsledek skupiny se shoduje s listem „Skupina“
-  (pohled BEZ přefakturace) s odchylkou **do 5 %**. Odchylku vysvětli.
+  (pohled BEZ přefakturace) s odchylkou **do 2 %**. Odchylku vysvětli.
 - Změna jednoho driveru (počet lidí, sazba, fakturovatelnost) se propíše do výsledku bez ručních zásahů.
 - Model A i B dávají **stejný výsledek skupiny**.
 
@@ -80,7 +81,7 @@ Společné pro oba:
 
 - Nejdřív napiš **plán** (max 1 strana) a zkontroluj ho proti kritériím v bodu 5. Pak realizuj.
 - **Fáze 1 = výstupy 1–3. Po fázi 1 skonči a čekej na moje odpovědi.** Nehádej je.
-- Výjimka: otázku, jejíž odpověď změní výsledek skupiny za Q1 o méně než **10 % nákladů skupiny za Q1**,
+- Výjimka: otázku, jejíž odpověď změní výsledek skupiny za Q1 o méně než **2 % nákladů skupiny za Q1**,
   nepokládej. Zvol rozumný předpoklad, zapiš ho do „Předpokladů“ a pokračuj.
 - **Fáze 2 = výstup 4, max 3 iterace.** Iterace = sestav → zkontroluj proti bodu 5 → oprav.
   Po každé iteraci mi v jedné zprávě napiš, co se změnilo a co ještě nesedí.
