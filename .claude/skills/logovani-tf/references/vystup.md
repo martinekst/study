@@ -34,7 +34,10 @@ volbou („Výchozí: vynechat.“). Bez otázek sekci vynech. Poslední věta:
 Věta „Zalogováno. Dnes máš dohromady X h Y min.“ a tabulka
 `Tiket (odkaz) | Dnes` včetně řádků „(tvůj zápis)“ a řádku **Celkem**.
 Součet je z odpovědí nástroje při zápisu a z readbacku před návrhem.
-Pod tabulkou, co podle odpovědí nebylo zapsáno.
+Odkaz v tabulce vede přímo na zapsaný worklog,
+`https://techfides.atlassian.net/browse/KLÍČ?focusedWorklogId=ID` (ID
+z odpovědi nástroje). Pod tabulkou, co podle odpovědí nebylo zapsáno,
+a u kterých tiketů `started_pro_zapis.py` posunul začátek.
 
 ## Komentář worklogu
 
@@ -50,6 +53,7 @@ Dobře: `Odeslání faktury 09/26 klientovi`
 ## Parametry zápisu
 
 `addWorklogToJiraIssue`: `cloudId "techfides.atlassian.net"`,
-`issueIdOrKey`, `started` ve tvaru `RRRR-MM-DDTHH:MM:00.000+0200`
-(v zimě `+0100`; hodnota `started` z výstupu skriptu), `timeSpent`
+`issueIdOrKey`, `started` z výstupu `started_pro_zapis.py` (tvar
+`RRRR-MM-DDTHH:MM:00.000+0200`, offset pro letní a zimní čas určí skript),
+`timeSpent`
 ve tvaru Jira (`1h 45m`, `45m`), `commentBody`, `contentFormat "markdown"`.

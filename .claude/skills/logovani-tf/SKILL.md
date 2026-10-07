@@ -1,6 +1,6 @@
 ---
 name: logovani-tf
-description: Navrhne a po schválení zapíše Martinovy worklogy do Jiry za dnešek nebo jiný den tohoto týdne podle stop v kalendáři, Plaudu, Slacku, odeslané poště, Claude Code relacích, repozitářích a Drive. Použij vždy, když Martin chce zalogovat nebo dologovat čas, ptá se, kolik má za den hodin v Jiře, nebo co mu chybí zalogovat, i když neřekne slovo worklog.
+description: Navrhne a po schválení zapíše Martinovy worklogy do Jiry za dnešek nebo včerejšek podle stop v kalendáři, Plaudu, Slacku, odeslané poště, Claude Code relacích, repozitářích a Drive. Použij vždy, když Martin chce zalogovat nebo dologovat čas, ptá se, kolik má za den hodin v Jiře, nebo co mu chybí zalogovat, i když neřekne slovo worklog.
 metadata:
   author: "Martin Studnička"
 ---
@@ -9,8 +9,10 @@ metadata:
 
 Osobní skill. Loguje jen Martin; jeho identita a zdroje jsou pevně
 v `references/zdroje.md`, tikety, kam loguje, jsou v `logovani/tikety.md`
-v kořeni tohoto repozitáře. Loguje se nejvýš týden zpětně (týdenní
-reporty) a worklog má vždy datum dne, kdy práce proběhla.
+v kořeni tohoto repozitáře. Worklog má vždy datum dne, kdy práce
+proběhla, a nesmí začínat víc než 24 hodin před okamžikem zápisu: interní
+kontrola takový zápis hodnotí jako pozdní worklog. Včas proto jde zapsat
+dnešek a včerejšek, ten nejpozději dnes do 23:30.
 
 Výstup má tři části: co už je za den zalogované, co navrhuješ dopsat
 a kolik to je dohromady. Podle toho Martin rychle pozná, jestli něco
@@ -22,8 +24,9 @@ opakované readbacky. Pravidla úspor jsou na konci.
 ## Postup pro jeden den
 
 1. **Den.** `TZ=Europe/Prague date '+%Y-%m-%d %H:%M %Z'`. Výchozí je
-   dnešek, jinak podle zadání, nejvýš 7 dní zpět. Více dní zpracuj po
-   jednom, každý s vlastním návrhem.
+   dnešek, jinak podle zadání. Den starší než včerejšek už včas zapsat
+   nejde: řekni to hned a pokračuj, jen když Martin pozdní zápis výslovně
+   chce. Více dní zpracuj po jednom, každý s vlastním návrhem.
 2. **Tabulka tiketů.** Přečti `logovani/tikety.md`. Pevné řádky mají klíč.
    Periodické řádky (týdenní, měsíční) přelož na klíč pro daný ISO týden
    nebo měsíc jedním JQL dotazem, například
@@ -45,9 +48,16 @@ opakované readbacky. Pravidla úspor jsou na konci.
    dvojí započtení schůzky byla nejčastější chyba dřívějších běhů.
 6. **Návrh.** Podle `references/vystup.md`: přehled dne, tabulka návrhu
    s odkazy na tikety, otázky s výchozí volbou, věta „Až odpovíš, zapíšu
-   to.“ Skonči a čekej.
-7. **Zápis.** Po schválení `addWorklogToJiraIssue` pro schválené řádky,
-   paralelně. Odpověď nástroje vrací zapsaný záznam včetně
+   to.“ U včerejška řekni, že se začátky worklogů při zápisu posunou
+   kvůli limitu 24 h. Skonči a čekej.
+7. **Zápis.** Po schválení, těsně před zápisem (schválení může přijít
+   o hodiny později), spusť
+   `python3 .claude/skills/logovani-tf/scripts/started_pro_zapis.py RRRR-MM-DD TIKET=HH:MM …`
+   se začátky z návrhu. Jeho výstup je `started` pro zápis: začátek starší
+   než limit 24 h posune, ale nechá ho ve dni práce. Řádek POZDNÍ zapiš
+   jen s výslovným souhlasem Martina v tomto vlákně, a to s původním
+   začátkem; řádek BUDOUCNOST nezapisuj. Pak `addWorklogToJiraIssue` pro
+   schválené řádky, paralelně. Odpověď nástroje vrací zapsaný záznam včetně
    `timeSpentSeconds`; finální součet spočítej z těchto odpovědí a z kroku
    3, bez dalšího dotazu do Jiry.
 8. **Tabulka.** Do `logovani/tikety.md` zapiš datum posledního logu
@@ -95,6 +105,9 @@ opakované readbacky. Pravidla úspor jsou na konci.
 
 - Zápis jen po schválení konkrétního návrhu v tomto vlákně. Tikety
   nezakládej, worklogy neměň ani nemaž.
+- Worklog nesmí začínat víc než 24 h před zápisem (interní kontrola
+  pozdních worklogů). `started` počítá `started_pro_zapis.py`, ne odhad
+  z hlavy.
 - Součet dne se k ničemu nedorovnává, nahoru ani dolů. Co stopy neukážou,
   může doplnit jen Martin; co ukážou, se neořezává.
 - Metadata stačí. Obsah e-mailu, přepis nahrávky nebo dokument otevři jen
@@ -107,7 +120,7 @@ opakované readbacky. Pravidla úspor jsou na konci.
 - Plaud: jen seznam nahrávek. Shrnutí (`get_note`) jen u nahrávky bez
   protějšku v kalendáři nebo s nic neříkajícím názvem. Přepis nikdy.
 - Claude Code relace: `list_sessions` s `limit 10`, bez `get_session`
-  a bez čtení událostí; stačí název a čas.
+  a bez čtení událostí; stačí shrnutí, název a čas z výpisu.
 - Drive `pageSize 10`, Slack `response_format concise`, Gmail `pageSize 20`.
 - Velké výsledky nech uložit do souboru a zpracuj skriptem; do kontextu
   patří jen výsledek.
