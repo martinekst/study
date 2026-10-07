@@ -85,17 +85,18 @@ opakované readbacky. Pravidla úspor jsou na konci.
   a událost, které se překrývají, jsou jedna schůzka.
 - Blok = stopy tiketu s mezerou do 30 min; počítá se sjednocení
   intervalů minus schůzky jiných tiketů.
-- Hodiny jdou vždy jen podle stop, nikdy podle cíle. Martin nepracuje
-  8 hodin denně: některé dny jsou kratší, mnoho delších. Čas bez stopy se
-  nedoplňuje a čas se stopou se neořezává. Rozpětí první až poslední
-  stopa slouží jen k odhalení dvojího započtení (součet nad rozpětí).
+- Návrh má odpovídat tomu, co se ten den skutečně stalo. Stopy jsou
+  důkaz, ne strop ani podlaha: navrhni, co doloží, a mezery v dni delší
+  než hodinu (ze skriptu) vypiš, aby Martin mohl doplnit práci bez stopy
+  (čtení, přemýšlení, cesta). Žádný cíl v hodinách; den má tolik, kolik
+  měl. Rozpětí stop slouží jen k odhalení dvojího započtení.
 
 ## Hranice
 
 - Zápis jen po schválení konkrétního návrhu v tomto vlákně. Tikety
   nezakládej, worklogy neměň ani nemaž.
-- Součet dne se nikdy nedorovnává na 8 hodin ani na jiný cíl, nahoru ani
-  dolů. Když stopy dají 3 hodiny, návrh má 3 hodiny; když dají 11, má 11.
+- Součet dne se k ničemu nedorovnává, nahoru ani dolů. Co stopy neukážou,
+  může doplnit jen Martin; co ukážou, se neořezává.
 - Metadata stačí. Obsah e-mailu, přepis nahrávky nebo dokument otevři jen
   tehdy, když bez něj nepoznáš tiket, a v návrhu to řekni.
 - Chybějící zdroj běh neruší; řekni, který chyběl.

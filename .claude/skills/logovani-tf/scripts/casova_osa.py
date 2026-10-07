@@ -234,9 +234,16 @@ def kontrola_dne(stopy, obed):
         else:
             rozpeti -= (obed_kon - obed_zac).total_seconds() / 60
             poznamky.append("odečten oběd")
+    # Mezery mezi stopami delší než hodinu: jen informace pro uživatele,
+    # který jediný ví, jestli v nich byla práce bez stopy.
+    obsazeno = sjednoceni([interval_stopy(s) for s in stopy])
+    mezery = []
+    for (z1, k1), (z2, _) in zip(obsazeno, obsazeno[1:]):
+        if z2 - k1 >= timedelta(minutes=60):
+            mezery.append(f"{k1:%H:%M}–{z2:%H:%M}")
     return {
         "prvni_stopa": prvni.isoformat(), "posledni_stopa": posledni.isoformat(),
-        "rozpeti_min": int(rozpeti), "poznamky": poznamky,
+        "rozpeti_min": int(rozpeti), "mezery": mezery, "poznamky": poznamky,
     }
 
 
@@ -276,6 +283,8 @@ def main():
         print(f"Rozpětí stop {den['prvni_stopa'][11:16]}–{den['posledni_stopa'][11:16]}, "
               f"{den['rozpeti_min']} min; navrženo {soucet} min. "
               + "; ".join(den["poznamky"]))
+        if den["mezery"]:
+            print("Mezery bez stop delší než hodinu: " + ", ".join(den["mezery"]))
     else:
         osa = [{"zdroj": s["zdroj"], "start": s["start"].isoformat(), "konec": s["konec"].isoformat(),
                 "popis": s["popis"], "tiket": s["tiket"]} for s in stopy]
