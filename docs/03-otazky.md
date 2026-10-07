@@ -84,3 +84,26 @@ Dopad: nájem 1,8 mil. Kč/Q; změna o 15 % překročí práh.
 11. **Jednotky**: tis. Kč bez DPH, měsíce 1–3/2027 + Q1.
 12. **Google Sheet**: nový soubor „2027-Q1 Model skupiny“ ve tvém Drive, listy Předpoklady, Model A, Model B, Porovnání. Existující rozpočet se nemění.
 13. **DBG a RTSG** mají externí výnosy 0 (jako v uzávěrce).
+
+---
+
+## C. Odpovědi (7.10.2026, interaktivně)
+
+| # | Otázka | Odpověď | Důsledek pro model |
+|---|---|---|---|
+| Q1 | Plán 2027 | **Neexistuje** | run-rate z plánu 10–12/2026 |
+| Q2 | Základna run-rate | **Průměr** plánu 10–12/2026 a skutečnosti 7–8/2026 | platí pro položky bez driveru (TIO, režie, HR, licence, sales mzdy); upřesněno níže |
+| Q3 | Parametry TF | **Počty lidí, sazby i fakturovatelnost** z plánu 10–12/2026 | výnos TF = drivery, ne průměr |
+| Q4 | Před / po odměnách boardu | **Obojí** | řádky „Výsledek před odměnami boardu“, blok odměn, „Výsledek po odměnách“ |
+| Q2/Q3 kolize | Jak spojit průměr a drivery | **Drivery pro TF, průměr pro zbytek** | TF výnos z driverů Q4; průměr na položky bez driveru |
+| Q5 | Odměny boardu | Fix ~120 tis./měs na člena + variabilní podle obratu a % ziskovosti; **model se příští rok změní, nech to jako proměnnou pro simulace** | board = parametry v listu Předpoklady: počet členů, fix na člena (výchozí 123 200 = 5,5 × 22 400), režim variabilní složky (0 / pevná částka / pravidla 2026), budget, cíle |
+| Q6 | Cíl shody | **Metodika uzávěrky, 11/2026** | list Kontrola s bridge na plán 11/2026 |
+| Q7 | Fixní smlouvy | **Nárůst o 7 %, jasně označit** | parametr „Indexace fixních smluv“ = 7 %, aplikuje se na označené řádky (nájem a energie Titanium, Fullcom, paušály DBG, licence, O2/internet); v modelu zvýrazněno |
+| Q8 | Fixní / variabilní | **Schválen návrh** | V / P / F / Board / IC podle docs/02 kap. 10 |
+| Q9 | TIO fee | **Dorovnat TIO na nulu** | fee TIO → TF = náklady TIO − externí výnosy TIO; v listu Předpoklady přepínatelné (10 % / 13 % / dorovnání) |
+| Q10 | RTSG | **Pokračuje beze změny** | RTSG samostatný blok, náklady Q4 run-rate, fakturace na TF = náklady RTSG (výsledek 0) |
+| Fáze 2 | Spustit hned? | **Ne.** Nejdřív přehled, co je jak nastavené a kde a jak se budou simulovat změny. Cíl: simulace dopadů rozhodnutí se srozumitelným „co se změnilo“. | → `docs/04-navrh-modelu.md` |
+
+Upřesnění k Q2 („průměr pro zbytek“): tam, kde je plán Q4 nula kvůli známé změně (odchod interního HR TF od 9/2026,
+externisté na inhouse projektech = 0), bere se plán, ne průměr. Průměr by jinak vrátil náklad, který už neexistuje.
+Seznam takových položek je v docs/04, část 3.
