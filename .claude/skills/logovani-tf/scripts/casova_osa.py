@@ -258,10 +258,10 @@ def main():
     den = kontrola_dne(stopy, obed)
     soucet = sum(t["minut"] for t in tikety if t["tiket"] != "?")
     den["navrzeno_min"] = soucet
+    # Rozpětí slouží jen k odhalení dvojího započtení. Nízký součet není
+    # chyba: hodiny jdou podle stop, ne podle délky dne.
     if soucet > den["rozpeti_min"]:
         den["poznamky"].append("součet přesahuje rozpětí stop, hledej dvojí započtení")
-    elif den["rozpeti_min"] and soucet < 0.6 * den["rozpeti_min"]:
-        den["poznamky"].append("součet je pod 60 % rozpětí, zeptej se, co chybí")
 
     if args.markdown:
         print("| Tiket | Čas | started | Podle čeho |")
