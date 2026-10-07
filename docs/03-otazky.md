@@ -107,3 +107,13 @@ Dopad: nájem 1,8 mil. Kč/Q; změna o 15 % překročí práh.
 Upřesnění k Q2 („průměr pro zbytek“): tam, kde je plán Q4 nula kvůli známé změně (odchod interního HR TF od 9/2026,
 externisté na inhouse projektech = 0), bere se plán, ne průměr. Průměr by jinak vrátil náklad, který už neexistuje.
 Seznam takových položek je v docs/04, část 3.
+
+## D. Doplnění před startem fáze 2 (7.10.2026)
+
+| Otázka | Odpověď | Důsledek pro model |
+|---|---|---|
+| Struktura listů Základ / Simulace / Porovnání | **OK** | beze změny |
+| Náklad interního týmu TF | **Přesnější odhad je v listech TF_RR_DEV / QA / BA / PM / OTHER** (mzdové řádky listu TF mohou obsahovat odstupné). | Náklad na hlavu = přímý náklad/h × 8 h × MD: Dev 578, TechLead 800, QA 433, BA 693, PM 588 Kč/h (listy TF_RR_*, odhad 2026). Při 20 MD ≈ 1 405 tis./měs za 16,5 lidí. Licence realizace z TF_RR_OTHER 56 tis./měs. |
+| Zaniklé položky (interní HR TF, externisté inhouse) | **Plán Q4** (ne průměr) | HR_WAGES TF = 0, EXT_INHOUSE = 0 |
+| Indexace 7 % na IC ceny DBG | **Neřešit.** Zdražení Titania o 7 % nese DBG, přefakturace se v modelu nemění. | IC ceny v Modelu B zůstávají na úrovni 2026 (nájmy 573,2 / 215,3 / 75,2; paušály 206,5 / 34,1 / 7,5 tis.). Indexace se týká jen externích smluv. Hlavní pohled je Model A (bez přefakturací); Model B je doplněk podle zadání. |
+| Start fáze 2 | **Ano** | |
