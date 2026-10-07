@@ -112,18 +112,20 @@ Výnos = lidé × MD × fakturovatelnost × sazba. Orientačně Q1 2027: **TF in
 | Mzdy | P | 0 | P |
 | IC (jen Model B): nájem DBG 80, paušál 8; fakturace RTSG → TF = náklady RTSG (výsledek 0) | IC | | tvá volba Q10 |
 
-### 3.7 Board – **páky pro simulaci** (tvá volba Q5)
+### 3.7 Board – **páky pro simulaci** (tvá volba Q5, upřesněno 7.10.)
 | Parametr | Základ | Poznámka |
 |---|---|---|
-| Počet členů | 5 | |
-| Fixní část na člena / měs | 123 200 Kč | 5,5 × min. mzda 22 400 (Výpočet odměn 2026); ty jsi uvedl ~120 tis., hodnota je editovatelná |
-| Režim variabilní části | **pravidla 2026** | přepínač: 0 / pevná částka / pravidla 2026 |
-| Variabilní budget na člena / měs | 86 000 Kč | pravidla 2026 |
-| Cíl obratu Q1 / cíl profitability | 26 mil. Kč / 10 % | 2026 cíl 104 mil./rok ÷ 4; editovatelné |
-| Váhy | váha profitu 75 % při plnění 0 %, 50 % při 100 %, 25 % při 200 %; váha obratu = zbytek | list „rovnice vypoctu vahy profitu“ |
-| Rozpad do firem (pro pohled na firmy) | DBG 12 % / TF 47,6 % / TIO 40,4 % / RTSG 0 % | Náklady DBG BOARD 2026, 9–12/2026 |
+| Počet členů | **5** | editovatelné (současnost) |
+| Fixní část na člena / měs | **120 000 Kč** | editovatelné |
+| Variabilní část na člena / měs | **10 000 Kč** | editovatelné, první odhad; pevná částka, **ne** vzorec z obratu a ziskovosti |
+| Odměny boardu celkem / měs | 5 × (120 + 10) = **650 tis. Kč** | = počet členů × (fix + variabilní) |
+| Rozpad do firem (jen pro pohled na firmy v Modelu B) | DBG 12 % / TF 47,6 % / TIO 40,4 % / RTSG 0 % | Náklady DBG BOARD 2026, 9–12/2026 |
 
-Při ztrátě skupiny vyjde variabilní část podle pravidel 2026 nízká (řádově 5 tis./člen/měs), fixní část 616 tis./měs dominuje.
+Pravidla 2026 (fix 5,5 × min. mzda, variabilní podle plnění obratu a profitability s plovoucími vahami) se
+**do modelu nepřenášejí**. Měsíční nároky 2026 v Číselníkách jsou záměrně rozvržené tak, aby board měl ve druhé
+půlce roku menší nárok a v prosinci se vše dopočítalo a dorovnalo (ochrana proti přečerpání a cashflow).
+Odvozovat z nich obecnou výši odměn by bylo špatně. Model odměn se pro 2027 má změnit; proto jsou obě složky
+jen čísla k simulaci.
 
 ### 3.8 Ostatní parametry
 | Parametr | Základ |
@@ -137,7 +139,7 @@ Při ztrátě skupiny vyjde variabilní část podle pravidel 2026 nízká (řá
 ## 4. Co z toho orientačně vyjde (jen pro představu, ne výsledek fáze 2)
 
 Externí výnosy skupiny Q1 ≈ 7,2 mil. Kč (TF 7,0 + TIO 0,2). Náklady skupiny Q1 ≈ 10,0 mil. Kč (lidé TF 3,6; fixní TF 1,0;
-outsource 0,45; TIO 0,8; DBG 2,2; RTSG 0,03; board 1,9). **Výsledek po odměnách boardu ≈ −2,8 mil. Kč za Q1**
+outsource 0,45; TIO 0,8; DBG 2,2; RTSG 0,03; board 1,95). **Výsledek po odměnách boardu ≈ −2,8 mil. Kč za Q1**
 (≈ −0,9 mil./měs). To odpovídá plánu Q4 2026 (−0,7 až −1,5 mil./měs). Práh 2 % nákladů ≈ 200 tis. Kč/Q.
 
 ---
@@ -147,7 +149,7 @@ outsource 0,45; TIO 0,8; DBG 2,2; RTSG 0,03; board 1,9). **Výsledek po odměná
 1. Σ IC výnosů − Σ IC nákladů = 0 (Model B, sloupec Eliminace).
 2. Skupina v Modelu A = skupina v Modelu B (na korunu).
 3. Sloupec „11/2026 kontrola“: do stejné struktury dosazené vstupy plánu 11/2026 (bez indexace, lidé a sazby 11/2026,
-   board nárok 11/2026 = 372 tis.). Výsledek se porovná se zisk skupiny 11/2026 podle metodiky uzávěrky
+   board = hodnota nároku 11/2026 z Číselníků rozpočtu, 372 tis., aby se porovnávalo stejné se stejným; pro Q1 2027 platí kap. 3.7). Výsledek se porovná se zisk skupiny 11/2026 podle metodiky uzávěrky
    (Σ výsledků firem z rozpočtu, pohled S přefakturací: DBG 409 − TIO 304 − TF 838 + RTSG 3 = −730; − nevybrané odměny 394 = **−1 124 tis. Kč**;
    dále se zohlední zbytek paušálu TF 126,5 tis., který rozpočet TF nenese, ale účetnictví ano). Bridge bude v listu Kontrola. Tolerance 2 %.
 4. Každá podkategorie z docs/02 kap. 9 má přiřazený typ (V/P/F/B/IC) a firmu – zaškrtávací tabulka.

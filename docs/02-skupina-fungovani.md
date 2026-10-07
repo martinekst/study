@@ -175,7 +175,11 @@ faktura, nefinanční čerpání) v DBG, TF, TIO i RTSG a kategorizují do `*_TR
   zprostředkování), profitabilita 10 %. Výše se řídí průběžným plněním obratu a profitability s plovoucími vahami
   (váha profitu 75 % při plnění 0 %, 50 % při 100 %, 25 % při 200 %). Roční korekce v prosinci.
 - Fix + var při cíli = **209 200 Kč/měs na člena** (Číselníky rozpočtu: „Náklad na člena boardu 2026 měsíčně“).
-- Skutečný nárok 2026 (Číselníky, celý board): 1 024 tis. (1/26) → 926 tis. (6/26) → 474 tis. (7/26) → 372 tis. (11/26) → 1 191 tis. (12/26, dorovnání). Součet 2026 ≈ **9,3 mil. Kč**.
+- Nárok 2026 po měsících (Číselníky, celý board): 1 024 tis. (1/26) → 926 tis. (6/26) → 474 tis. (7/26) → 372 tis. (11/26) → 1 191 tis. (12/26). Součet 2026 ≈ **9,3 mil. Kč**.
+  **Pozor na výklad:** pokles ve druhé půlce roku není důsledek horších výsledků, ale záměrné rozvržení (koeficienty
+  měsíců v listu „TADY Skutečnost 2026“: 11 % v lednu … 3 % v prosinci, „nastaveno tak, abychom peníze nevraceli“).
+  V prosinci se vše dopočítá a dorovná. Účel: board zásadně nepřečerpá odměny a nemusí vracet peníze, a šetří to
+  cashflow. Z měsíčních hodnot proto nelze odvozovat obecnou výši odměn (upřesnění COO, 7.10.2026).
 
 **Čerpání vs. nárok:** nárok − skutečně čerpáno = **nevybrané odměny boardu**, které uzávěrka odečítá od zisku
 skupiny (kap. 4.1). Čerpání 1–8/2026 bylo 585–802 tis./měs. Evidence: „2026 Čerpání odměn boardu DBG“

@@ -96,7 +96,7 @@ Dopad: nájem 1,8 mil. Kč/Q; změna o 15 % překročí práh.
 | Q3 | Parametry TF | **Počty lidí, sazby i fakturovatelnost** z plánu 10–12/2026 | výnos TF = drivery, ne průměr |
 | Q4 | Před / po odměnách boardu | **Obojí** | řádky „Výsledek před odměnami boardu“, blok odměn, „Výsledek po odměnách“ |
 | Q2/Q3 kolize | Jak spojit průměr a drivery | **Drivery pro TF, průměr pro zbytek** | TF výnos z driverů Q4; průměr na položky bez driveru |
-| Q5 | Odměny boardu | Fix ~120 tis./měs na člena + variabilní podle obratu a % ziskovosti; **model se příští rok změní, nech to jako proměnnou pro simulace** | board = parametry v listu Předpoklady: počet členů, fix na člena (výchozí 123 200 = 5,5 × 22 400), režim variabilní složky (0 / pevná částka / pravidla 2026), budget, cíle |
+| Q5 | Odměny boardu | Fix ~120 tis./měs na člena + variabilní podle obratu a % ziskovosti; **model se příští rok změní, nech to jako proměnnou pro simulace**. Upřesnění 7.10.: měsíční nároky 2026 jsou záměrně rozvržené s dorovnáním v prosinci, neodvozovat z nich obecnou výši. | board = **počet členů (5) × (fix 120 tis. + variabilní 10 tis.) Kč/měs**, všechna tři čísla editovatelná; pravidla 2026 se nepřenášejí |
 | Q6 | Cíl shody | **Metodika uzávěrky, 11/2026** | list Kontrola s bridge na plán 11/2026 |
 | Q7 | Fixní smlouvy | **Nárůst o 7 %, jasně označit** | parametr „Indexace fixních smluv“ = 7 %, aplikuje se na označené řádky (nájem a energie Titanium, Fullcom, paušály DBG, licence, O2/internet); v modelu zvýrazněno |
 | Q8 | Fixní / variabilní | **Schválen návrh** | V / P / F / Board / IC podle docs/02 kap. 10 |
