@@ -1,6 +1,6 @@
 # Návrh modelu Q1 2027: co bude jak nastavené a kde se simuluje
 
-Stav: návrh před fází 2. Nic v Google Drive zatím nevzniklo. Cíl modelu podle tvé odpovědi: **simulace**, ve
+Stav: návrh schválený 7.10.2026 a realizovaný ve fázi 2 (výsledky v docs/05-porovnani-modelu.md). Odchylky od návrhu: odměny boardu = členové × (fix + variabilní), IC ceny bez indexace, náklad týmu z listů TF_RR_*. Cíl modelu podle tvé odpovědi: **simulace**, ve
 které jdou měnit náklady a příjmy, je vidět dopad rozhodnutí a je srozumitelné, co se změnilo a proč.
 
 ---
