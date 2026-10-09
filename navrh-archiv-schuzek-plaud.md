@@ -22,14 +22,21 @@ zavedení.
    vrací konektor Plaudu.
 4. GRIT, který běží v GPT, může číst stejný repozitář přes GitHub
    konektor; archiv je tak nezávislý na tom, která AI ho čte.
-5. Zpětný přenos od 1. 9. 2026 zvládne jedna až dvě rutinní dávky; celá
-   historie od května je také zvládnutelná, viz odhad níže.
+5. Zpětný přenos od 1. 9. 2026 (asi 110 nahrávek) zvládne rutina
+   v několika dávkách; celá historie od května (asi 250 nahrávek) je také
+   zvládnutelná, viz odhad níže.
 
 Google Drive a Confluence vycházejí hůř hlavně proto, že do nich obsah
 musí „vyprodukovat“ model (konektor nemá skript, který by soubor zkopíroval),
-takže každý přepis stojí výstupní tokeny. Externí znalostní služby
+takže každý přepis stojí výstupní tokeny. Plaud nemá veřejné API, takže
+GitHub Actions ani skript v Google Workspace se k přepisům nedostanou;
+jedinou cestou bez modelu je oficiální spouštěč v Zapieru (přepis do
+Drive), ale ten posílá obsah přes třetí stranu. Externí znalostní služby
 (vektorová databáze, Notion AI apod.) jsou pro tento objem zbytečné
-a znamenají data u třetí strany.
+a také znamenají data u třetí strany. Hotové řešení, které by přepisy
+ukládalo do gitu pro agenty, neexistuje; nejblíž je plugin
+PsychQuant/plaud-mcp-connector (oficiální konektor → markdown na nahrávku
+→ ripgrep), ze kterého jde převzít formát a logiku přírůstků.
 
 ## 2. Co jsem změřil
 
@@ -116,8 +123,9 @@ Zdroje jsou oficiální dokumentace a inženýrský blog Anthropicu, ověřeno
   https://code.claude.com/docs/en/mcp
 - **GitHub Action Claude Code** umí běžet na cron, ale v neinteraktivním
   běhu nezvládne přihlášení OAuth ke vzdálenému MCP a konektory claude.ai
-  (Plaud, Drive) se načítají jen při přihlášení předplatným. Pro Actions
-  je tedy nutný vlastní klíč k API Plaudu, konektor použít nejde.
+  (Plaud, Drive) se načítají jen při přihlášení předplatným. Actions by
+  potřebovaly vlastní klíč k API Plaudu, které neexistuje (část 9), takže
+  dnes nepřipadají v úvahu.
   https://code.claude.com/docs/en/github-actions
   https://code.claude.com/docs/en/mcp
 - **Cache a limity.** Claude Code cachuje prompt automaticky; na
@@ -155,8 +163,9 @@ Zdroje jsou oficiální dokumentace a inženýrský blog Anthropicu, ověřeno
 | --- | --- | --- | --- |
 | Rutina Claude Code, vše přes model | Rutina zavolá konektor, přepis přijde do kontextu, model ho zapíše do souboru a napíše shrnutí | Vstup i výstup za celý přepis | Žádná, funguje dnes |
 | Rutina Claude Code, kopie skriptem | Rutina zavolá konektor tak, aby výsledek skončil v souboru; skript ho převede na markdown; model čte jen kompaktní přepis kvůli shrnutí | Vstup za kompaktní přepis, výstup jen shrnutí | Dnes se do souboru odkládá výsledek nad 25 000 tokenů nebo 50 000 znaků, tedy nahrávka delší než asi 38 min; pro kratší je třeba v prostředí rutiny snížit `MAX_MCP_OUTPUT_TOKENS`, což je nutné ověřit v pilotu (dokumentace popisuje jen zvyšování) |
-| GitHub Actions + API Plaudu | Naplánovaný workflow stáhne přepisy přímo z Plaudu a commitne; shrnutí dopíše rutina nebo Claude Code Action | Kopie bez modelu | Konektor Plaud v Actions použít nejde (bez přihlášení claude.ai), nutný klíč k veřejnému API Plaudu [DOPLNIT z rešerše, zda existuje] |
-| Skript v Google Workspace | Totéž co Actions, ale do Drive | Kopie bez modelu | Stejná podmínka; navíc nevýhody Drive |
+| Rutina Claude Code s oficiálním CLI Plaudu | Rutina spustí `plaud transcript <id>` v shellu a výstup uloží rovnou do souboru; model čte jen kompaktní přepis | Vstup za kompaktní přepis, výstup jen shrnutí | CLI vyžaduje první přihlášení v prohlížeči a ukládá tokeny do `~/.plaud/tokens.json`; přenos tokenů do cloudového prostředí není dokumentovaný a `api.plaud.ai` není ve výchozím seznamu povolených domén. Ověřit v pilotu jako záložní cestu k variantě výše |
+| GitHub Actions nebo skript v Google Workspace | Naplánovaný workflow stáhne přepisy a commitne | Kopie bez modelu | Dnes neproveditelné: Plaud nemá veřejné API ani webhooky (podpora Plaudu, září 2026), konektor claude.ai v Actions nefunguje (bez přihlášení předplatným, OAuth nejde dokončit bez prohlížeče) |
+| Zapier → Google Drive, index rutinou | Oficiální spouštěč Plaudu „Transcript & Summary Ready“ uloží přepis jako soubor do Drive (nebo OneDrive, Dropbox, Notion); rutina soubory indexuje | Kopie bez modelu | Placená služba třetí strany, přepisy procházejí Zapierem; požadavek na tarif Plaudu nedokumentovaný; přepis z Plaudu jde jen TXT, SRT, DOCX, PDF |
 
 ### 4.3 Jak projekty z archivu čtou
 
@@ -176,16 +185,16 @@ Varianty kombinují úložiště a plnění. Hodnocení: nízká, střední, vys
 u tokenů měsíční objem, který projde modelem při dnešním tempu (odhad
 skriptem `odhad_tokenu.py`, viz část 6).
 
-| Kritérium | V1 Repozitář + rutina, kopie skriptem (doporučeno) | V2 Repozitář + rutina, vše přes model | V3 Repozitář + Actions s API Plaudu | V4 Google Drive + rutina | V5 Confluence + rutina | V6 Bez kopie, jen skill |
+| Kritérium | V1 Repozitář + rutina, kopie skriptem (doporučeno) | V2 Repozitář + rutina, vše přes model | V3 Zapier → Drive, index rutinou | V4 Google Drive + rutina | V5 Confluence + rutina | V6 Bez kopie, jen skill |
 | --- | --- | --- | --- | --- | --- | --- |
-| Spolehlivost | vysoká: deduplikace podle `id`, stav v repozitáři, běh se dá zopakovat | střední: dlouhé přepisy zahlcují kontext, hrozí zkrácení nebo přeskočení | vysoká, pokud API existuje a je stabilní | střední: žádná evidence stavu mimo soubory, snadno vzniknou duplicity | střední: totéž, navíc formátování | nízká: závislost na značce v názvu, žádné hledání |
-| Tokeny za měsíc | 0,9 M vstup, 0,06 M výstup | 1,4 M vstup, 0,55 M výstup | 0,7 M vstup, 0,06 M výstup | 1,4 M vstup, 0,55 M výstup | vyšší než Drive (formát stránek) | 0,5 M vstup (2 projekty), bez možnosti dotazů napříč |
-| Pracnost údržby | nízká: jeden playbook, jeden skript, jedna rutina | nízká | střední: workflow, tajný klíč, změny API | střední: ruční evidence zpracovaných nahrávek | střední | nízká |
-| Bezpečnost | vysoká: data v privátním repozitáři TechFides, rutina jen s konektorem Plaud + GitHub, přepisy označené jako data | stejná | vysoká; klíč k Plaudu v tajemstvích GitHubu | střední: sdílení Drive se snadno rozšíří; obsah prochází dalším konektorem | střední: široká viditelnost v Confluence | vysoká (nic nového nevzniká) |
-| Pracnost zavedení | střední: repozitář, skript, playbook rutiny, úprava dvou projektů | nízká až střední | střední až vysoká | nízká až střední | střední | nízká |
-| Lidská čitelnost | dobrá na GitHubu; lokálně Obsidian nebo VitePress | stejná | stejná | výborná | výborná | jen v Plaudu |
+| Spolehlivost | vysoká: deduplikace podle `id`, stav v repozitáři, běh se dá zopakovat | střední: dlouhé přepisy zahlcují kontext, hrozí zkrácení nebo přeskočení | střední až vysoká: událostní, bez oken a watermarků, ale závislost na dvou dalších službách a na tarifu | střední: žádná evidence stavu mimo soubory, snadno vzniknou duplicity | střední: totéž, navíc formátování | nízká: závislost na značce v názvu, žádné hledání |
+| Tokeny za měsíc | 0,9 M vstup, 0,06 M výstup | 1,4 M vstup, 0,55 M výstup | 0,7 M vstup, 0,06 M výstup (kopie zdarma, index rutinou) | 1,4 M vstup, 0,55 M výstup | vyšší než Drive (formát stránek) | 0,5 M vstup (2 projekty), bez možnosti dotazů napříč |
+| Pracnost údržby | nízká: jeden playbook, jeden skript, jedna rutina | nízká | střední: Zapier účet a zap, rutina pro index, dvě místa, kde se něco může rozbít | střední: ruční evidence zpracovaných nahrávek | střední | nízká |
+| Bezpečnost | vysoká: data v privátním repozitáři TechFides, rutina jen s konektorem Plaud + GitHub, přepisy označené jako data | stejná | nižší: přepisy procházejí Zapierem (třetí strana), což je mimo Martinovu podmínku | střední: sdílení Drive se snadno rozšíří; obsah prochází dalším konektorem | střední: široká viditelnost v Confluence | vysoká (nic nového nevzniká) |
+| Pracnost zavedení | střední: repozitář, skript, playbook rutiny, úprava dvou projektů | nízká až střední | nízká až střední: zap z šablony, rutina pro index | nízká až střední | střední | nízká |
+| Lidská čitelnost | dobrá na GitHubu; lokálně Obsidian nebo VitePress | stejná | výborná (Drive) | výborná | výborná | jen v Plaudu |
 | Použitelnost pro GRIT v GPT | ano, GitHub konektor | ano | ano | ano, Drive konektor | ano | ne (GPT čte Plaud zvlášť) |
-| Rozšíření na Slack, Gmail, Drive | stejný vzor: zdroj → skript → markdown → index | stejný | obtížnější (každý zdroj = jiné API) | stejný vzor | stejný vzor | ne |
+| Rozšíření na Slack, Gmail, Drive | stejný vzor: zdroj → skript → markdown → index | stejný | jen pro zdroje, které Zapier umí | stejný vzor | stejný vzor | ne |
 
 ## 6. Odhad tokenů při Martinově tempu
 
@@ -198,9 +207,10 @@ dnů, sazby z části 2, 600 tokenů výstupu na shrnutí a řádek indexu,
 | --- | --- | --- | --- |
 | A rutina, vše přes model (V2, V4, V5) | 1,44 M | 0,55 M | 17 |
 | B rutina, kopie skriptem (V1) | 0,93 M | 0,06 M | 5 |
-| C Actions + API Plaudu (V3) | 0,71 M | 0,06 M | 4 |
+| C kopie bez modelu (Zapier do Drive, nebo CLI Plaudu v rutině), index rutinou (V3) | 0,71 M | 0,06 M | 4 |
 | E dnes: 2 projekty čtou Plaud přímo (jen část Plaud) | 0,47 M | 0 | 2 |
 | F po zavedení: 2 projekty čtou archiv (jen část Plaud) | 0,30 M | 0 | 1 |
+| G rutina, do souboru jen přepisy nad 38 min, kratší přes model | 1,16 M | 0,27 M | 10 |
 
 Co z toho plyne:
 
@@ -212,8 +222,9 @@ Co z toho plyne:
   tisíc tokenů (grep indexu plus 2 až 3 kompaktní přepisy) místo 35 tisíc
   (výpis plus 3 JSON přepisy) a hlavně je vůbec možný; dnes projekt vidí
   jen nahrávky se značkou v názvu.
-- Varianta B stojí měsíčně asi 1 M tokenů navíc oproti dnešku; to je
-  méně než jedna delší pracovní relace v Claude Code. Na plánu Max jde
+- Varianta B stojí měsíčně asi 1 M tokenů (řádek B) a projektům ušetří
+  asi 0,2 M (rozdíl řádků E a F), čistě tedy asi 0,8 M navíc oproti
+  dnešku; to je méně než jedna delší pracovní relace v Claude Code. Na plánu Max jde
   o čerpání limitů, ne o peníze; částky v USD jsou jen měřítko.
 - Zpětný přenos: od 1. 9. 2026 (asi 110 nahrávek, 50 h) stojí ve variantě
   B 0,56 M vstup a 0,07 M výstup; celá historie od 18. 5. (asi 250
@@ -245,9 +256,12 @@ jen Plaud, repozitář jen archiv, push do hlavní větve jako u ISDG):
 
 1. Vylistovat Plaud za posledních 7 dní (nahrávky se objevují i se
    zpožděním a přejmenovávají se), porovnat `id` se stavem.
-2. U každé nové nahrávky stáhnout přepis tak, aby skončil v souboru,
+2. U každé nové nahrávky stáhnout přepis tak, aby skončil v souboru
+   (snížený práh `MAX_MCP_OUTPUT_TOKENS`, záložně oficiální CLI Plaudu),
    převést skriptem, uložit; model dostane jen kompaktní přepis pro
-   shrnutí a řádek indexu.
+   shrnutí a řádek indexu. Formát souboru převzít z pluginu
+   PsychQuant/plaud-mcp-connector (jedna replika na řádek), aby šel
+   případně použít i jeho vyhledávací skill.
 3. Přiřadit projekty: značka v názvu je závazná (jako dnes), navíc model
    navrhne projekt u neoznačených nahrávek a navrhy jde jednou týdně
    potvrdit; projektové rutiny používají jen potvrzené značky.
@@ -281,23 +295,92 @@ zkopíruje soubory se značkou `grit` do repozitáře GRIT.
   50 000 znaků; přepisy nahrávek do asi 38 minut (většina stand-upů) tedy
   chodí do kontextu. Pokud se práh v prostředí rutiny nedá snížit,
   kopíruje se skrz model jen u krátkých nahrávek a náklady se posunou
-  mezi variantu A a B (odhad 1,1 M vstup, 0,25 M výstup měsíčně).
+  mezi variantu A a B (řádek G v části 6: 1,2 M vstup, 0,27 M výstup
+  měsíčně).
 - **Veřejné GitHub Pages.** Web z privátního repozitáře (VitePress) je
-  na běžném plánu GitHubu veřejný [DOPLNIT z rešerše]. Pro lidské čtení
-  stačí GitHub sám; VitePress jen s ochranou přístupu.
-- **Limity rutin.** Rutina má omezený čas běhu; zpětný přenos jde po
-  dávkách, ne najednou.
+  na plánech Free, Pro i Team veřejný; soukromé Pages má jen GitHub
+  Enterprise Cloud. Pro lidské čtení stačí zobrazení markdownu přímo na
+  GitHubu; VitePress jen za ochranou přístupu (Cloudflare Access zdarma
+  do 50 uživatelů, nebo heslo na Vercelu za 20 USD měsíčně), nebo
+  Obsidian s git synchronizací na vlastním PC.
+  https://docs.github.com/en/enterprise-cloud@latest/pages/getting-started-with-github-pages/changing-the-visibility-of-your-github-pages-site
+- **Konektor v rutině.** Je hlášená chyba, kdy rutina zaregistruje jen
+  část nástrojů konektoru (anthropics/claude-code#79746, otevřená). Plaud
+  má nástrojů pět, při prvním běhu se ověří, že jsou všechny; „zelený“ stav
+  běhu rutiny znamená jen, že relace proběhla, ne že úloha uspěla.
+- **Hledání v Plaudu není úplné.** Parametr `query` v `list_files`
+  prochází jen 500 nejnovějších nahrávek; jediné úplné hledání je nad
+  vlastními soubory.
+- **Shrnutí mohou být sebejistě špatně.** Zkušenosti s „LLM wiki“ (viz
+  část 9) ukazují, že odvozené texty časem obsahují tvrzení, která ve
+  zdroji nejsou. Přepis je proto neměnný zdroj, shrnutí je označené jako
+  odvozené a projekty citují z přepisu, jak to dnes dělá ISDG.
+- **Délka běhu rutiny.** Dokumentace maximální délku běhu neuvádí;
+  zpětný přenos jde po dávkách po 10 až 20 nahrávkách, aby jeden běh
+  nezahltil kontext a dal se po chybě zopakovat.
 - **Jeden zapisovatel.** Do archivu píše jen rutina plnění; projekty
   jen čtou. Jinak vzniknou konflikty v gitu.
 
 ## 9. Hotová řešení, ze kterých jde vyjít
 
-[DOPLNIT z rešerše]
+Ověřeno 9. 10. 2026 (počty hvězd a data posledních změn z GitHubu).
+
+**Oficiální přístup k Plaudu**
+
+- Konektor Plaud MCP a CLI `@plaud-ai/cli` (obecně dostupné od května
+  2026, zatím zdarma pro aktivní účty; přihlášení OAuth, bez API klíčů).
+  Konektor nabízí pět nástrojů jen pro čtení a nevrací složky ani štítky.
+  CLI má příkazy pro výpis, hledání, přepis a shrnutí, ale žádný export
+  ani synchronizaci; první přihlášení vyžaduje prohlížeč.
+  https://docs.plaud.ai/plaud-mcp-cli/mcp, https://docs.plaud.ai/plaud-mcp-cli/cli
+- Veřejné API a webhooky Plaud nemá (podpora Plaudu, září 2026; starší
+  text o uzavřené betě OAuth API je překonaný). „Developer Platform“
+  je SDK pro výrobce vlastních aplikací, ne přístup k vlastní knihovně.
+  https://support.plaud.ai/hc/en-us/articles/60726890231449-How-can-I-get-API-access-to-my-Plaud-data
+- Zapier: oficiální spouštěč „Transcript & Summary Ready“ se šablonami
+  pro Google Drive, OneDrive, Dropbox, Notion, Slack a Gmail; Plaud nemůže
+  být cílem akce. https://zapier.com/apps/plaud/integrations
+- Ruční export: jednotlivě nebo hromadně, přepis jako TXT, SRT, DOCX, PDF.
+
+**Nástroje pro archivaci přepisů z Plaudu** (všechny neoficiální)
+
+| Nástroj | Co dělá | Stav | Hodí se? |
+| --- | --- | --- | --- |
+| PsychQuant/plaud-mcp-connector | Plugin Claude Code nad oficiálním MCP: jeden markdown na nahrávku v lokální cache, přírůstky podle `id`, hledání ripgrepem, skilly `plaud-sync`, `plaud-grep` | 8 hvězd, 133 commitů, změna 6. 10. 2026, MIT | Ano jako vzor formátu a přírůstkové logiky; cache je lokální, ne git; v cloudu nutné ověřit přihlášení |
+| leonardsellem/plaud-sync-for-obsidian | Plugin Obsidianu, `file_id` ve front matter, bez duplicit | 89 hvězd, změna 5/2026, MIT | Ne: potřebuje běžící Obsidian a token z webu |
+| ckelsoe/obsidian-plaud-importer | Plugin Obsidianu, deduplikace podle `plaud-id` | 13 hvězd, změna 9/2026, alfa | Ne: totéž |
+| lmmx/plaudit | CLI v Rustu s oficiálním OAuth, `plaudit sync <složka>` píše markdown na nahrávku | 0 hvězd, 6/2026 | Zajímavé, ale bez uživatelů a bez přihlášení bez prohlížeče |
+| danielgwilson/plaud (npm) | Hromadný export TXT, JSON, MD s odchyceným tokenem | 4 hvězdy, 7/2026 | Ne: neoficiální token, snadno se rozbije |
+| rsteckler/applaud, riffado | Samostatný server, který Plaud obchází každých 10 min a ukládá soubory | 98 a 405 hvězd | Ne: vlastní server |
+
+**Vzory sdílené znalostní báze pro Claude Code**
+
+- „LLM wiki“ Andreje Karpathyho (duben 2026): `raw/` neměnné zdroje,
+  `wiki/` udržovaná modelem, `index.md` jako katalog čtený jako první,
+  bez vektorů; funguje do stovek stránek. Implementace: AgriciDaniel/
+  claude-obsidian (15 tisíc hvězd), lucasastorian/llmwiki (noční údržba
+  rutinami Claude Code), atomicstrata/llm-wiki-compiler. Kritika: po
+  půl roce obsahuje wiki sebejistě špatné záznamy a index zastarává;
+  jeden blog odhaduje náklad na zpracování na 5 až 8násobek tokenů
+  zdroje (neověřeno). https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f
+- Basic Memory (markdown plus lokální SQLite, 4 tisíce hvězd, AGPL, cloud
+  15 USD měsíčně), claude-mem (ukládá pozorování z nástrojů, ne dokumenty),
+  mem0, Letta: paměťové služby pro agenty, ne archiv přepisů; vlastní
+  čísla o úsporách tokenů jsou od výrobců a neověřená.
+- Podobné archivátory jiných zapisovačů: martybytes/fathom-clerk (složka
+  na schůzku s `_transcript.md`, `_summary.md`, `_meeting.json`, stav
+  v SQLite), dannymcc/Granola-to-Obsidian (228 hvězd, deduplikace podle
+  `granola_id`). Nikdo z nich necommituje do gitu; návrh v části 7 je
+  stejný vzor přenesený do repozitáře.
+- Nikdo zatím nepublikoval spojení Plaud + rutiny Claude Code ani
+  Plaud + GitHub; jediný publikovaný příklad ingestu rutinami je llmwiki.
 
 ## 10. Další kroky (návrh pilotu)
 
 1. Týden 1: repozitář, skript převodu, rutina plnění nad posledními
-   7 dny, ověření prahu pro odložení do souboru.
+   7 dny; ověřit dvě cesty kopie bez modelu (snížený práh
+   `MAX_MCP_OUTPUT_TOKENS`, oficiální CLI Plaudu v cloudovém prostředí)
+   a že rutina vidí všech pět nástrojů konektoru.
 2. Týden 2: zpětný přenos od 1. 9. 2026 po dávkách; kontrola indexu.
 3. Týden 3: ISDG čte archiv místo Plaudu; GRIT přes GitHub konektor
    v GPT.
@@ -339,10 +422,10 @@ B_in  = MIN_M*MD_T_MIN + DAYS*RUN_OVH
 B_out = REC_M*SUM_OUT
 rows.append(("B rutina, kopie skriptem, model jen indexuje", B_in, B_out))
 # B2: jako B, shrnuti dela levnejsi subagent (Sonnet 5.5: 2/10 USD) - tokeny stejne, cena nizsi
-# C: GitHub Actions + API Plaudu (pokud existuje): kopie bez modelu, index jako B bez rezie MCP
+# C: kopie bez modelu (Zapier do Drive, nebo CLI Plaudu v rutine): index jako B bez rezie MCP
 C_in  = MIN_M*MD_T_MIN + DAYS*10_000
 C_out = REC_M*SUM_OUT
-rows.append(("C Actions + API Plaudu, index rutinou", C_in, C_out))
+rows.append(("C kopie bez modelu (Zapier/CLI), index rutinou", C_in, C_out))
 # D: Drive / Confluence: obsah souboru musi vyprodukovat model (konektor nema skript), tedy jako A
 rows.append(("D Drive nebo Confluence pres konektor", A_in, A_out))
 # E: stav dnes: 2 projekty, kazdy denne list_files(14 dni ~50 polozek) + osnova + cast prepisu 1 nahravky
@@ -353,6 +436,11 @@ rows.append(("E dnes: 2 projekty ctou Plaud primo (jen cast Plaud)", E_in, 0))
 F_day = 1_500 + 28*MD_T_MIN
 F_in  = 2*DAYS*F_day
 rows.append(("F po zavedeni: 2 projekty ctou archiv (jen cast Plaud)", F_in, 0))
+# G: smiseny scenar: jen nahravky nad 38 min (50 000 znaku) se odlozi do souboru, kratsi projdou modelem
+LONG_MIN, SHORT_MIN = 1480, 1172   # minuty za 30 dni podle delky nahravek
+G_in  = SHORT_MIN*JSON_T_MIN + LONG_MIN*MD_T_MIN + DAYS*RUN_OVH
+G_out = SHORT_MIN*MD_T_MIN + REC_M*SUM_OUT
+rows.append(("G rutina, do souboru jen prepisy nad 38 min", G_in, G_out))
 
 print(f"{'varianta':58} {'vstup M':>8} {'vystup M':>9} {'USD/mes':>8}")
 for n,i,o in rows:
