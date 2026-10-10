@@ -54,13 +54,13 @@ opakované readbacky. Pravidla úspor jsou na konci.
    Skonči a čekej.
 7. **Zápis.** Po schválení, těsně před zápisem (schválení může přijít
    o hodiny později), spusť
-   `python3 .claude/skills/logovani-tf/scripts/started_pro_zapis.py RRRR-MM-DD TIKET=HH:MM+MINUTY …`
-   se začátkem a délkou každého worklogu z návrhu. Jeho výstup je
-   `started` pro zápis: začátek starší než limit 24 h posune, ale nechá
-   ho ve dni práce, a další worklog téhož tiketu napojí na konec
-   předchozího. Řádek POZDNÍ zapiš jen s výslovným souhlasem Martina
-   v tomto vlákně, a to s původním začátkem; řádky BUDOUCNOST a NEVEJDE SE
-   nezapisuj a zeptej se. Pak `addWorklogToJiraIssue` pro
+   `python3 .claude/skills/logovani-tf/scripts/started_pro_zapis.py RRRR-MM-DD TIKET=HH:MM …`
+   se začátkem každého worklogu z návrhu (tiket s víc worklogy uveď
+   víckrát). Jeho výstup je `started` pro zápis: začátek starší než limit
+   24 h posune, ale nechá ho ve dni práce. Worklogy jednoho tiketu nemusí
+   jít za sebou. Řádek POZDNÍ zapiš jen s výslovným souhlasem Martina
+   v tomto vlákně, a to s původním začátkem; řádek BUDOUCNOST nezapisuj.
+   Pak `addWorklogToJiraIssue` pro
    schválené řádky, paralelně. Odpověď nástroje vrací zapsaný záznam včetně
    `timeSpentSeconds`; finální součet spočítej z těchto odpovědí a z kroku
    3, bez dalšího dotazu do Jiry.
@@ -110,8 +110,9 @@ opakované readbacky. Pravidla úspor jsou na konci.
 ## Hranice
 
 - Zápis jen po schválení konkrétního návrhu v tomto vlákně. Tikety
-  nezakládej, worklogy nemaž; zapsaný worklog měň (`worklogId`) jen na
-  Martinův výslovný pokyn.
+  nezakládej. Zapsané worklogy neměň ani nemaž (žádné `worklogId`
+  v `addWorklogToJiraIssue`): když je některý špatně, řekni Martinovi,
+  co v Jiře opravit.
 - Worklog nesmí začínat víc než 24 h před zápisem (interní kontrola
   pozdních worklogů) a nesmí být delší než 4 h. `started` počítá
   `started_pro_zapis.py`, rozdělení `casova_osa.py`, ne odhad z hlavy.
