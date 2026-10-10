@@ -24,6 +24,8 @@ od 7:46 do 14:30, oběd odečten.“
 - Řádky s vlastním zápisem Martina jsou v tabulce s poznámkou
   „(tvůj zápis)“ a bez návrhu.
 - Řádek „bez tiketu“ pro stopy, které nemají kam; patří k němu otázka.
+- Jeden řádek je jeden worklog, nejvýš 4 h. Tiket s víc worklogy má víc
+  řádků („TF-849 (1/2)“, „TF-849 (2/2)“), každý s vlastním popisem.
 
 Pod tabulkou **Potřebuju od tebe**: očíslované otázky, každá s výchozí
 volbou („Výchozí: vynechat.“). Bez otázek sekci vynech. Poslední věta:
@@ -56,4 +58,5 @@ Dobře: `Odeslání faktury 09/26 klientovi`
 `issueIdOrKey`, `started` z výstupu `started_pro_zapis.py` (tvar
 `RRRR-MM-DDTHH:MM:00.000+0200`, offset pro letní a zimní čas určí skript),
 `timeSpent`
-ve tvaru Jira (`1h 45m`, `45m`), `commentBody`, `contentFormat "markdown"`.
+ve tvaru Jira (`1h 45m`, `45m`, nejvýš `4h`), `commentBody`,
+`contentFormat "markdown"`.

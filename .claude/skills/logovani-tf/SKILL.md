@@ -48,15 +48,19 @@ opakované readbacky. Pravidla úspor jsou na konci.
    dvojí započtení schůzky byla nejčastější chyba dřívějších běhů.
 6. **Návrh.** Podle `references/vystup.md`: přehled dne, tabulka návrhu
    s odkazy na tikety, otázky s výchozí volbou, věta „Až odpovíš, zapíšu
-   to.“ U včerejška řekni, že se začátky worklogů při zápisu posunou
-   kvůli limitu 24 h. Skonči a čekej.
+   to.“ Tabulka má řádek na worklog (`worklogy` ze skriptu): tiket nad
+   4 h má víc řádků, každý s popisem činností svých bloků. U včerejška
+   řekni, že se začátky worklogů při zápisu posunou kvůli limitu 24 h.
+   Skonči a čekej.
 7. **Zápis.** Po schválení, těsně před zápisem (schválení může přijít
    o hodiny později), spusť
-   `python3 .claude/skills/logovani-tf/scripts/started_pro_zapis.py RRRR-MM-DD TIKET=HH:MM …`
-   se začátky z návrhu. Jeho výstup je `started` pro zápis: začátek starší
-   než limit 24 h posune, ale nechá ho ve dni práce. Řádek POZDNÍ zapiš
-   jen s výslovným souhlasem Martina v tomto vlákně, a to s původním
-   začátkem; řádek BUDOUCNOST nezapisuj. Pak `addWorklogToJiraIssue` pro
+   `python3 .claude/skills/logovani-tf/scripts/started_pro_zapis.py RRRR-MM-DD TIKET=HH:MM+MINUTY …`
+   se začátkem a délkou každého worklogu z návrhu. Jeho výstup je
+   `started` pro zápis: začátek starší než limit 24 h posune, ale nechá
+   ho ve dni práce, a další worklog téhož tiketu napojí na konec
+   předchozího. Řádek POZDNÍ zapiš jen s výslovným souhlasem Martina
+   v tomto vlákně, a to s původním začátkem; řádky BUDOUCNOST a NEVEJDE SE
+   nezapisuj a zeptej se. Pak `addWorklogToJiraIssue` pro
    schválené řádky, paralelně. Odpověď nástroje vrací zapsaný záznam včetně
    `timeSpentSeconds`; finální součet spočítej z těchto odpovědí a z kroku
    3, bez dalšího dotazu do Jiry.
@@ -95,6 +99,8 @@ opakované readbacky. Pravidla úspor jsou na konci.
   a událost, které se překrývají, jsou jedna schůzka.
 - Blok = stopy tiketu s mezerou do 30 min; počítá se sjednocení
   intervalů minus schůzky jiných tiketů.
+- Jeden worklog má nejvýš 4 h. Delší čas na tiketu skript rozdělí na víc
+  worklogů po celých blocích; blok delší než 4 h rozdělí uvnitř.
 - Návrh má odpovídat tomu, co se ten den skutečně stalo. Stopy jsou
   důkaz, ne strop ani podlaha: navrhni, co doloží, a mezery v dni delší
   než hodinu (ze skriptu) vypiš, aby Martin mohl doplnit práci bez stopy
@@ -104,10 +110,11 @@ opakované readbacky. Pravidla úspor jsou na konci.
 ## Hranice
 
 - Zápis jen po schválení konkrétního návrhu v tomto vlákně. Tikety
-  nezakládej, worklogy neměň ani nemaž.
+  nezakládej, worklogy nemaž; zapsaný worklog měň (`worklogId`) jen na
+  Martinův výslovný pokyn.
 - Worklog nesmí začínat víc než 24 h před zápisem (interní kontrola
-  pozdních worklogů). `started` počítá `started_pro_zapis.py`, ne odhad
-  z hlavy.
+  pozdních worklogů) a nesmí být delší než 4 h. `started` počítá
+  `started_pro_zapis.py`, rozdělení `casova_osa.py`, ne odhad z hlavy.
 - Součet dne se k ničemu nedorovnává, nahoru ani dolů. Co stopy neukážou,
   může doplnit jen Martin; co ukážou, se neořezává.
 - Metadata stačí. Obsah e-mailu, přepis nahrávky nebo dokument otevři jen

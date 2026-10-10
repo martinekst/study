@@ -11,8 +11,9 @@ Vstup: JSON pole stop. Každá stopa je objekt:
 
 Čas bez pásma se vykládá podle zdroje: plaud, gmail, drive a relace
 posílají UTC, slack a kalendář čas v Europe/Prague. Výstup je JSON na
-stdout: normalizovaná osa, bloky na tiket s odhadem a kontrola dne.
-S --markdown vypíše místo JSON tabulku pro návrh.
+stdout: normalizovaná osa, bloky na tiket s odhadem, rozdělení času tiketu
+do worklogů po nejvýš 4 h (`worklogy`) a kontrola dne.
+S --markdown vypíše místo JSON tabulku pro návrh, řádek na worklog.
 
 Použití:
   python3 casova_osa.py stopy.json [--obed 12:00-13:00] [--markdown]
@@ -30,6 +31,7 @@ SCHUZKOVE_ZDROJE = {"kalendar", "plaud", "kalendar+plaud"}
 KROK = 15          # minut, granularita worklogu
 BOD = 15           # minut, kolik „váží“ stopa bez délky (zpráva, commit)
 MEZERA_BLOKU = 30  # minut, větší mezera začíná nový blok
+MAX_WORKLOG = 240  # minut, nejdelší jeden worklog (interní pravidlo)
 
 
 def parsuj_cas(hodnota, zdroj):
@@ -168,6 +170,34 @@ def jira_trvani(m):
     return " ".join(casti) or "0m"
 
 
+def rozdel_na_worklogy(bloky):
+    """Rozdělí čas tiketu na worklogy po nejvýš MAX_WORKLOG minutách.
+    Celé bloky drží pohromadě, aby měl každý worklog vlastní popis činností;
+    dělí se jen blok, který je sám delší než limit."""
+    casti, aktualni, nulove = [], None, []
+    for i, b in enumerate(bloky):
+        if b["minut"] == 0:
+            (aktualni["bloky"] if aktualni else nulove).append(i)
+            continue
+        zbyva, posun = b["minut"], 0
+        while zbyva:
+            if aktualni and posun == 0 and aktualni["minut"] + zbyva <= MAX_WORKLOG:
+                aktualni["minut"] += zbyva
+                aktualni["bloky"].append(i)
+                break
+            kus = min(zbyva, MAX_WORKLOG)
+            zacatek = datetime.fromisoformat(b["zacatek"]) + timedelta(minutes=posun)
+            aktualni = {"started": zacatek.isoformat(), "minut": kus, "bloky": [i]}
+            casti.append(aktualni)
+            zbyva -= kus
+            posun += kus
+    if casti and nulove:
+        casti[0]["bloky"] = nulove + casti[0]["bloky"]
+    for c in casti:
+        c["timeSpent"] = jira_trvani(c["minut"])
+    return casti
+
+
 def bloky_na_tiket(stopy):
     podle_tiketu = {}
     for s in stopy:
@@ -214,6 +244,7 @@ def bloky_na_tiket(stopy):
             "timeSpent": jira_trvani(celkem),
             "started": popis_bloku[0]["zacatek"],
             "bloky": popis_bloku,
+            "worklogy": rozdel_na_worklogy(popis_bloku),
         })
     vysledek.sort(key=lambda r: -r["minut"])
     return vysledek
@@ -274,11 +305,15 @@ def main():
         print("| Tiket | Čas | started | Podle čeho |")
         print("| --- | --- | --- | --- |")
         for t in tikety:
-            stopy_text = " // ".join(
-                "; ".join(b["stopy"]) + (f" ({b['poznamka']})" if b.get("poznamka") else "")
-                for b in t["bloky"])
             nazev = t["tiket"] if t["tiket"] != "?" else "bez tiketu"
-            print(f"| {nazev} | {t['timeSpent']} | {t['started'][11:16]} | {stopy_text} |")
+            casti = t["worklogy"] or [{"timeSpent": t["timeSpent"], "started": t["started"],
+                                       "bloky": list(range(len(t["bloky"])))}]
+            for n, c in enumerate(casti, 1):
+                stopy_text = " // ".join(
+                    "; ".join(b["stopy"]) + (f" ({b['poznamka']})" if b.get("poznamka") else "")
+                    for b in (t["bloky"][i] for i in c["bloky"]))
+                stitek = nazev + (f" ({n}/{len(casti)})" if len(casti) > 1 else "")
+                print(f"| {stitek} | {c['timeSpent']} | {c['started'][11:16]} | {stopy_text} |")
         print()
         print(f"Rozpětí stop {den['prvni_stopa'][11:16]}–{den['posledni_stopa'][11:16]}, "
               f"{den['rozpeti_min']} min; navrženo {soucet} min. "

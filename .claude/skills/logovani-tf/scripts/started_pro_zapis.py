@@ -10,10 +10,16 @@ nejde a skript ho označí POZDNÍ.
 
 Offset (+0200 v létě, +0100 v zimě) skript určí sám podle Europe/Prague.
 
+Tiket s víc worklogy (nad 4 h) se zadá víckrát, s délkou v minutách za
+`+`. Další worklog téhož tiketu pak začne nejdřív tam, kde předchozí
+skončil, aby se po posunu kvůli limitu nepřekrývaly.
+
 Použití:
   python3 started_pro_zapis.py 2026-10-07 GPB-39=08:30 TF-848=08:45 [--ted 2026-10-08T20:30]
+  python3 started_pro_zapis.py 2026-10-09 TF-849=08:30+120 TF-849=13:30+210 GPB-69=09:15+45
 --ted nahradí aktuální čas (pro kontrolu); bez něj se bere skutečný čas.
-Výstup: řádek na tiket se stavem včas / posunuto / POZDNÍ / BUDOUCNOST.
+Výstup: řádek na worklog se stavem včas / posunuto / navazuje / POZDNÍ /
+BUDOUCNOST / NEVEJDE SE.
 Návratový kód 2, když je některý worklog POZDNÍ nebo v budoucnosti.
 """
 import argparse
@@ -43,7 +49,7 @@ def jira_cas(dt):
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("den", help="RRRR-MM-DD, den, kdy práce proběhla")
-    ap.add_argument("worklogy", nargs="+", metavar="TIKET=HH:MM")
+    ap.add_argument("worklogy", nargs="+", metavar="TIKET=HH:MM[+MINUTY]")
     ap.add_argument("--ted", help="aktuální čas ISO 8601 (bez pásma = Europe/Prague)")
     args = ap.parse_args()
 
@@ -60,19 +66,33 @@ def main():
 
     print(f"Teď {ted:%Y-%m-%d %H:%M}, nejdřívější začátek včas {nejdrive:%Y-%m-%d %H:%M}")
     chyba = False
+    konce = {}  # tiket -> konec jeho posledního worklogu
     for polozka in args.worklogy:
-        tiket, cas = polozka.split("=", 1)
+        tiket, hodnota = polozka.split("=", 1)
+        cas, _, delka = hodnota.partition("+")
         h, m = map(int, cas.split(":"))
         start = datetime(den.year, den.month, den.day, h, m, tzinfo=PRAHA)
+        poznamky = []
+        if start.astimezone(UTC) < nejdrive.astimezone(UTC):
+            if nejdrive.astimezone(UTC) > konec_dne.astimezone(UTC):
+                chyba = True
+                print(f"{tiket}\t{jira_cas(start)}\tPOZDNÍ – den už nejde zapsat včas, "
+                      "zapsat jen s Martinovým souhlasem")
+                continue
+            poznamky.append(f"posunuto z {cas} kvůli limitu 24 h")
+            start = nejdrive
+        predchozi = konce.get(tiket)
+        if predchozi and start.astimezone(UTC) < predchozi.astimezone(UTC):
+            start = predchozi
+            poznamky.append("navazuje na předchozí worklog téhož tiketu")
         if start.astimezone(UTC) > ted.astimezone(UTC):
             stav, chyba = "BUDOUCNOST – začátek je po aktuálním čase, nezapisovat", True
-        elif start.astimezone(UTC) >= nejdrive.astimezone(UTC):
-            stav = "včas"
-        elif nejdrive.astimezone(UTC) <= konec_dne.astimezone(UTC):
-            stav = f"posunuto z {cas} kvůli limitu 24 h"
-            start = nejdrive
+        elif start.astimezone(UTC) > konec_dne.astimezone(UTC):
+            stav, chyba = "NEVEJDE SE – začátek by přešel do dalšího dne, zeptej se Martina", True
         else:
-            stav, chyba = "POZDNÍ – den už nejde zapsat včas, zapsat jen s Martinovým souhlasem", True
+            stav = "; ".join(poznamky) or "včas"
+        if delka:
+            konce[tiket] = (start.astimezone(UTC) + timedelta(minutes=int(delka))).astimezone(PRAHA)
         print(f"{tiket}\t{jira_cas(start)}\t{stav}")
     sys.exit(2 if chyba else 0)
 
